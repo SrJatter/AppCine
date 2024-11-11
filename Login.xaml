@@ -5,14 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppCine"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="800" Background="DarkSlateGray">
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Title="Login" Height="300" Width="400" Background="DarkSlateGray">
     <Grid>
-        <Label Content="WELCOME TO LOGIN PAGE" FontSize="22" Foreground="White" HorizontalAlignment="Center" Margin="0,74,0,-31"></Label>
-        <Label x:Name="UsernameLabel" Content="Username" FontSize="18" Foreground="White" HorizontalAlignment="Left" Margin="250,0,0,0" VerticalAlignment="Center"/>
-        <Label x:Name="PasswordLabel" Content="Password" FontSize="18" Foreground="White" HorizontalAlignment="Left" Margin="256,253,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Username" HorizontalAlignment="Left" FontSize="18" Margin="347,207,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="172" Height="27"/>
-        <Button Content="Login" FontSize="18" HorizontalAlignment="Left" Background="LightCyan" Margin="433,353,0,0" VerticalAlignment="Top" Width="86" Click="Button_Click"/>
-        <Button Content="Cancel" FontSize="18" HorizontalAlignment="Left" Background="Pink" Margin="340,353,0,0" VerticalAlignment="Top" Width="88"/>
-        <PasswordBox x:Name="Password" HorizontalAlignment="Left" Margin="347,261,0,0" VerticalAlignment="Top" Width="172" Height="26"/>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="1,0" StartPoint="0,1">
+                <GradientStop Color="#51407D" Offset="0.4629"></GradientStop>
+                <GradientStop Color="#29324A" Offset="0.652"></GradientStop>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+
+        <Label Content="LOGIN" FontSize="22" Foreground="White" HorizontalAlignment="Center" Margin="0,22,0,22"></Label>
+        <TextBox x:Name="Username" Height="35" Background="#20242F"
+                     Foreground="DimGray" FontSize="15" BorderThickness="0"
+                     VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="88,85,88,180">E-mail: </TextBox>
+        <PasswordBox x:Name="Password" Height="35" Background="#20242F" 
+                     Foreground="DimGray" FontSize="15" BorderThickness="0" 
+                     VerticalContentAlignment="Center" 
+                     Margin="0,150,0,0" VerticalAlignment="Top" Width="223"
+                     />
+        <Button Content="Login" FontSize="18" HorizontalAlignment="Left" Background="LightCyan" Margin="226,211,0,0" VerticalAlignment="Top" Width="86" Click="Button_Click"/>
+        <Button Content="Cancel" FontSize="18" HorizontalAlignment="Left" Background="Pink" Margin="88,211,0,0" VerticalAlignment="Top" Width="88"/>
+        
     </Grid>
 </Window>

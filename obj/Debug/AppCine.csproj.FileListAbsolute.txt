@@ -16,3 +16,21 @@ C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Debug\AppCine.p
 C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Debug\login.g.cs
 C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Debug\login.baml
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\AppCine.csproj.AssemblyReference.cache
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\Login.g.cs
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\MainWindow.g.cs
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\App.g.cs
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\AppCine_MarkupCompile.cache
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\AppCine_MarkupCompile.lref
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\AppCine.exe
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\AppCine.pdb
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\bin\Debug\AppCine.exe.config
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\bin\Debug\AppCine.exe
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\bin\Debug\AppCine.pdb
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\Login.baml
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\MainWindow.baml
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\AppCine.g.resources
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\AppCine.Properties.Resources.resources
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\AppCine.csproj.GenerateResource.cache
+C:\Users\apolo\OneDrive\Nube\Documentos\Cosas cole\DAM2\Materias\M7 Desarrollo de interfaces\AppCine\obj\Debug\AppCine.csproj.CoreCompileInputs.cache
