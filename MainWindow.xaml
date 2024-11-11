@@ -1,0 +1,55 @@
+﻿<Window x:Class="AppCine.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppCine"
+        xmlns:conv="clr-namespace:AppCine.Converters"
+        mc:Ignorable="d"
+        Title="AppCine" Height="450" Width="880">
+
+    <Window.Resources>
+        <conv:DateFormatterConverter x:Key="DateFormatterConverter" />
+        <conv:TimeFormatterConverter x:Key="TimeFormatterConverter" />
+    </Window.Resources>
+
+    <Grid x:Name="Peliculas">
+        <ListView x:Name="list_peliculas" HorizontalAlignment="Left" Height="300" VerticalAlignment="Center" Width="540" Margin="23,0,0,0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Titulo" Width="Auto" DisplayMemberBinding="{Binding titulo}" />
+                    <GridViewColumn Header="Idioma" Width="Auto" DisplayMemberBinding="{Binding idioma}" />
+                    <GridViewColumn Header="Sala" Width="Auto" DisplayMemberBinding="{Binding sala.numero}" />
+                    <GridViewColumn Header="Fecha Inicio" Width="Auto" DisplayMemberBinding="{Binding data_inici, Converter={StaticResource DateFormatterConverter}}" />
+                    <GridViewColumn Header="Fecha Fin" Width="Auto" DisplayMemberBinding="{Binding data_fi, Converter={StaticResource DateFormatterConverter}}" />
+                    <GridViewColumn Header="Hora Inicio" Width="Auto" DisplayMemberBinding="{Binding hora_inici, Converter={StaticResource TimeFormatterConverter}}" />
+                    <GridViewColumn Header="Duracion" Width="Auto" DisplayMemberBinding="{Binding duracion}" />
+                </GridView>
+            </ListView.View>
+            <TabControl Height="100" Width="100">
+                <TabItem Header="TabItem">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+                <TabItem Header="TabItem">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+            </TabControl>
+            <DataGrid Height="100" Width="100" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+        </ListView>
+        <ComboBox x:Name="filterBox" HorizontalAlignment="Left" Margin="185,24,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.364,-2.383" SelectionChanged="ComboBox_SelectionChanged"/>
+        <Label Content="Genero de la pelicula:" HorizontalAlignment="Left" Margin="23,22,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="subFilterBox" HorizontalAlignment="Left" Margin="382,24,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="subFilterBox_SelectionChanged"/>
+        <Rectangle HorizontalAlignment="Left" Height="222" Margin="579,67,0,0" Stroke="DarkGray" VerticalAlignment="Top" Width="222"/>
+        <Button x:Name="reserveButton" Content="Reservar" HorizontalAlignment="Left" Margin="666,294,0,0" VerticalAlignment="Top"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="590,78,0,0" Stroke="Black" VerticalAlignment="Top" Width="49"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="666,78,0,0" Stroke="Black" VerticalAlignment="Top" Width="48"/>
+        <Rectangle HorizontalAlignment="Left" Height="48" Margin="590,154,0,0" Stroke="Black" VerticalAlignment="Top" Width="49"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="738,78,0,0" Stroke="Black" VerticalAlignment="Top" Width="49"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="737,230,0,0" Stroke="Black" VerticalAlignment="Top" Width="50"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="666,152,0,0" Stroke="Black" VerticalAlignment="Top" Width="49"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="665,230,0,0" Stroke="Black" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.837,1.621"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="590,230,0,0" Stroke="Black" VerticalAlignment="Top" Width="49"/>
+        <Rectangle HorizontalAlignment="Left" Height="49" Margin="738,152,0,0" Stroke="Black" VerticalAlignment="Top" Width="49"/>
+        <DatePicker x:Name="dataPicker" HorizontalAlignment="Left" Margin="382,22,0,0" VerticalAlignment="Top" SelectedDateChanged="dataPicker_SelectedDateChanged"/>
+    </Grid>
+</Window>

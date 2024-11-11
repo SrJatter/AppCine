@@ -1,0 +1,15 @@
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\bin\Release\AppCine.exe.config
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\bin\Release\AppCine.exe
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\bin\Release\AppCine.pdb
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Release\AppCine.csproj.AssemblyReference.cache
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Release\MainWindow.g.cs
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Release\App.g.cs
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Release\AppCine_MarkupCompile.cache
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Release\AppCine_MarkupCompile.lref
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Release\MainWindow.baml
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Release\AppCine.g.resources
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Release\AppCine.Properties.Resources.resources
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Release\AppCine.csproj.GenerateResource.cache
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Release\AppCine.csproj.CoreCompileInputs.cache
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Release\AppCine.exe
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\AppCine\obj\Release\AppCine.pdb
