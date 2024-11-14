@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AppCine.Properties
+namespace Taquilla.Properties
 {
 
 

@@ -85,3 +85,8 @@ C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\bin\Debug\System.Numeri
 C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\AppCine.csproj.Up2Date
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\Taquilla.g.cs
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\Taquilla.baml
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\Themes\Generic.baml
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\Page4.g.cs
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\Page4.baml

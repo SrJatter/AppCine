@@ -10,28 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AppCine
+namespace SideBar_Nav.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Page4.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Page4 : Page
     {
-        public MainWindow()
+        public Page4()
         {
             InitializeComponent();
         }
-
-        private void sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-            var selected = sidebar.SelectedItem as NavButton;
-
-            navframe.Navigate(selected.Navlink);
-
-        }
     }
 }
-  
