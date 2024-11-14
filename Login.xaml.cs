@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Media;
 
 namespace AppCine
 {
@@ -57,6 +58,59 @@ namespace AppCine
         {
             string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
             return Regex.IsMatch(email, emailPattern);
+        }
+
+        private void Username_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            if (Username.Text != "E-Mail")
+            {
+                Username.Foreground = Brushes.DimGray; // Cambia el color para el texto real del usuario
+            }
+        }
+
+        private void Username_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Username.Text == "E-Mail")
+            {
+                Username.Text = "";
+                Username.Foreground = Brushes.DimGray; // Cambia el color para que sea más legible
+            }
+        }
+
+        private void Username_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Username.Text))
+            {
+                Username.Text = "E-Mail";
+                Username.Foreground = Brushes.DimGray; // Vuelve a DimGray para el marcador de posición
+            }
+        }
+
+        private void Password_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Password.Password == "Contraseña")
+            {
+                Password.Password = "";
+                Password.Foreground = Brushes.DimGray; // Cambia el color para que sea más legible
+            }
+        }
+        private void Password_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Username.Text))
+            {
+                Password.Password = "Contraseña";
+                Password.Foreground = Brushes.DimGray; // Vuelve a DimGray para el marcador de posición
+            }
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close(); // Cierra la ventana de login
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
