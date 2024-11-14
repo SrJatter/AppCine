@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AppCine.dto;
+using MySql.Data.MySqlClient;
 
 namespace AppCine
 {
@@ -34,18 +35,86 @@ namespace AppCine
 
         private void CargarPeliculas()
         {
-            // Creamos una lista de 10 películas
-            peliculas = new List<Pelicula> {
-                    new Pelicula("Oppenheimer", new Sala(1), idiomas.Ingles, new DateTime(2024, 10, 15), new DateTime(2024, 12, 15), new TimeSpan(19, 0, 0), 180, new List<genres> { genres.Drama, genres.Documental, genres.Fantasia }),
-                    new Pelicula("Barbie", new Sala(2), idiomas.Ingles, new DateTime(2024, 10, 10), new DateTime(2024, 12, 10), new TimeSpan(21, 0, 0), 114, new List<genres> { genres.Comedia, genres.Fantasia }),
-                    new Pelicula("Spider-Man: Across the Spider-Verse", new Sala(5), idiomas.Castellano, new DateTime(2024, 11, 01), new DateTime(2024, 12, 01), new TimeSpan(18, 30, 0), 140, new List<genres> { genres.Musical, genres.Aventura, genres.Accio }),
-                    new Pelicula("The Exorcist: Believer", new Sala(4), idiomas.Ingles, new DateTime(2024, 10, 05), new DateTime(2024, 12, 05), new TimeSpan(22, 0, 0), 111, new List<genres> { genres.Terror, genres.Suspense }),
-                    new Pelicula("Killers of the Flower Moon", new Sala(3), idiomas.Ingles, new DateTime(2024, 10, 20), new DateTime(2024, 12, 20), new TimeSpan(19, 30, 0), 206, new List<genres> { genres.Ciencia_Ficcio, genres.Comedia })
-                };
+            // Cadena de conexión para MySQL (ajusta estos valores según tu configuración)
+            string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine;";
+            peliculas = new List<Pelicula>();  // Lista donde se almacenarán las películas
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Obtener las películas
+                    string query = @"
+                        SELECT p.id, p.titulo, p.numero_sala, p.idioma, p.data_inici, p.data_fi, p.hora_inici, p.duracion, p.generos
+                        FROM Pelicula p
+                        WHERE p.data_inici <= @fechaActual AND p.data_inici >= @fechaActual";
+
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@fechaActual", DateTime.Now);
+
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                // Crear la película a partir de los resultados de la consulta
+                                int id = reader.GetInt32(0);
+                                string titulo = reader.GetString(1);
+                                int salaId = reader.GetInt32(2);
+                                string idioma = reader.GetString(3);
+                                DateTime fechaInicio = reader.GetDateTime(4);
+                                DateTime fechaFin = reader.GetDateTime(5);
+                                TimeSpan horaInicio = reader.GetTimeSpan(6);
+                                int duracion = reader.GetInt32(7);
+
+                                // Crear la Sala y Pelicula
+                                Sala sala = new Sala(salaId);  // Ajusta la creación de la sala según cómo la tengas en la base de datos
+                                idiomas idiomaEnum = (idiomas)Enum.Parse(typeof(idiomas), idioma);
+
+                                Pelicula pelicula = new Pelicula(titulo, sala, idiomaEnum, fechaInicio, fechaFin, horaInicio, duracion, new List<genres>());
+                                peliculas.Add(pelicula);
+                            }
+                        }
+                    }
+
+                    // Obtener los géneros asociados a cada película
+                    foreach (var pelicula in peliculas)
+                    {
+                        string queryGeneros = @"
+                            SELECT g.nombre
+                            FROM Generos g
+                            INNER JOIN Peliculas_Generos pg ON g.id = pg.genero_id
+                            WHERE pg.pelicula_id = @peliculaId";
+
+                        using (MySqlCommand commandGeneros = new MySqlCommand(queryGeneros, connection))
+                        {
+                            commandGeneros.Parameters.AddWithValue("@peliculaId", pelicula.Id); // Asume que tienes una propiedad Id en la película
+
+                            using (MySqlDataReader readerGeneros = commandGeneros.ExecuteReader())
+                            {
+                                while (readerGeneros.Read())
+                                {
+                                    string generoNombre = readerGeneros.GetString(0);
+                                    genres generoEnum = (genres)Enum.Parse(typeof(genres), generoNombre);
+                                    pelicula.generos.Add(generoEnum);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar las películas: " + ex.Message);
+            }
+
+            // Filtramos las películas que están en el rango de fechas actual
             peliculas = peliculas.Where(p => p.data_inici <= DateTime.Now && p.data_fi >= DateTime.Now).ToList();
         }
 
-        private void CargarGeneros()
+    private void CargarGeneros()
         {
             // Añadimos los géneros al ComboBox
             subFilterBox.Items.Add("-");

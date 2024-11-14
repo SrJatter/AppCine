@@ -1,5 +1,7 @@
 ﻿using System;
+using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace AppCine
@@ -30,8 +32,8 @@ namespace AppCine
                 MessageBox.Show("La contraseña debe tener al menos 3 caracteres.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 failedAttempts++;
             }
-            // Validar credenciales de usuario
-            else if (email == "admin@admin.com" && password == "admin")
+            // Validar credenciales de usuario con base de datos
+            else if (await AutenticarUsuario(email, password))
             {
                 MessageBox.Show("Login exitoso");
                 this.Visibility = Visibility.Hidden; // Oculta la ventana de login
@@ -39,9 +41,8 @@ namespace AppCine
             }
             else
             {
-                MessageBox.Show("Login exitoso");
-                this.Visibility = Visibility.Hidden; // Oculta la ventana de login
-                failedAttempts = 0;
+                MessageBox.Show("Usuario o contraseña incorrectos.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                failedAttempts++;
             }
 
             // Cerrar aplicación después de tres intentos fallidos
@@ -57,6 +58,38 @@ namespace AppCine
         {
             string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
             return Regex.IsMatch(email, emailPattern);
+        }
+
+        // Método para autenticar usuario a través de la base de datos
+        private async Task<bool> AutenticarUsuario(string email, string password)
+        {
+            bool isAuthenticated = false;
+
+            // Cadena de conexión (reemplazar con tu propia cadena de conexión)
+            string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine";
+
+            // Consulta SQL para verificar las credenciales
+            string query = "SELECT COUNT(1) FROM Usuarios WHERE email = @Email AND password = @Password";
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Email", email);
+                command.Parameters.AddWithValue("@Password", password); // Asegúrate de almacenar las contraseñas de manera segura (encriptadas)
+
+                try
+                {
+                    await connection.OpenAsync();
+                    int result = Convert.ToInt32(await command.ExecuteScalarAsync());
+                    isAuthenticated = result == 1; // Si se encuentra una coincidencia, es un usuario válido
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al conectar con la base de datos: " + ex.Message);
+                }
+            }
+
+            return isAuthenticated;
         }
     }
 }
