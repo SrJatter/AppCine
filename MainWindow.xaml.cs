@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using AppCine.dto;
 using MySql.Data.MySqlClient;
 
@@ -20,7 +10,6 @@ namespace AppCine
 {
     public partial class MainWindow : Window
     {
-        // Lista de películas
         private List<Pelicula> peliculas;
         bool first = true;
         bool subFilter = false;
@@ -30,14 +19,12 @@ namespace AppCine
             InitializeComponent();
             CargarPeliculas();  // Cargamos las películas al iniciar
             CargarFiltros();  // Cargamos los filtros en el ComboBox
-
         }
 
         private void CargarPeliculas()
         {
-            // Cadena de conexión para MySQL (ajusta estos valores según tu configuración)
             string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine;";
-            peliculas = new List<Pelicula>();  // Lista donde se almacenarán las películas
+            peliculas = new List<Pelicula>();
 
             try
             {
@@ -45,11 +32,11 @@ namespace AppCine
                 {
                     connection.Open();
 
-                    // Obtener las películas
+                    // Consulta SQL para cargar las películas
                     string query = @"
-                        SELECT p.id, p.titulo, p.numero_sala, p.idioma, p.data_inici, p.data_fi, p.hora_inici, p.duracion, p.generos
-                        FROM Pelicula p
-                        WHERE p.data_inici <= @fechaActual AND p.data_inici >= @fechaActual";
+                SELECT p.id, p.titulo, p.numero_sala, p.idioma, p.data_inici, p.data_fi, p.hora_inici, p.duracion, p.generos
+                FROM Pelicula p
+                WHERE p.data_inici <= @fechaActual AND p.data_fi >= @fechaActual";
 
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
@@ -59,7 +46,6 @@ namespace AppCine
                         {
                             while (reader.Read())
                             {
-                                // Crear la película a partir de los resultados de la consulta
                                 int id = reader.GetInt32(0);
                                 string titulo = reader.GetString(1);
                                 int salaId = reader.GetInt32(2);
@@ -68,38 +54,19 @@ namespace AppCine
                                 DateTime fechaFin = reader.GetDateTime(5);
                                 TimeSpan horaInicio = reader.GetTimeSpan(6);
                                 int duracion = reader.GetInt32(7);
+                                string generosTexto = reader.GetString(8); // Campo `p.generos`
 
-                                // Crear la Sala y Pelicula
-                                Sala sala = new Sala(salaId);  // Ajusta la creación de la sala según cómo la tengas en la base de datos
+                                // Convertir el texto de géneros a la lista de enums
+                                List<genres> generosLista = generosTexto
+                                    .Split(',') // Separar por coma
+                                    .Select(g => (genres)Enum.Parse(typeof(genres), g.Trim())) // Convertir a enum
+                                    .ToList();
+
+                                Sala sala = new Sala(salaId);
                                 idiomas idiomaEnum = (idiomas)Enum.Parse(typeof(idiomas), idioma);
 
-                                Pelicula pelicula = new Pelicula(titulo, sala, idiomaEnum, fechaInicio, fechaFin, horaInicio, duracion, new List<genres>());
+                                Pelicula pelicula = new Pelicula(titulo, sala, idiomaEnum, fechaInicio, fechaFin, horaInicio, duracion, generosLista);
                                 peliculas.Add(pelicula);
-                            }
-                        }
-                    }
-
-                    // Obtener los géneros asociados a cada película
-                    foreach (var pelicula in peliculas)
-                    {
-                        string queryGeneros = @"
-                            SELECT g.nombre
-                            FROM Generos g
-                            INNER JOIN Peliculas_Generos pg ON g.id = pg.genero_id
-                            WHERE pg.pelicula_id = @peliculaId";
-
-                        using (MySqlCommand commandGeneros = new MySqlCommand(queryGeneros, connection))
-                        {
-                            commandGeneros.Parameters.AddWithValue("@peliculaId", pelicula.Id); // Asume que tienes una propiedad Id en la película
-
-                            using (MySqlDataReader readerGeneros = commandGeneros.ExecuteReader())
-                            {
-                                while (readerGeneros.Read())
-                                {
-                                    string generoNombre = readerGeneros.GetString(0);
-                                    genres generoEnum = (genres)Enum.Parse(typeof(genres), generoNombre);
-                                    pelicula.generos.Add(generoEnum);
-                                }
                             }
                         }
                     }
@@ -110,92 +77,77 @@ namespace AppCine
                 MessageBox.Show("Error al cargar las películas: " + ex.Message);
             }
 
-            // Filtramos las películas que están en el rango de fechas actual
             peliculas = peliculas.Where(p => p.data_inici <= DateTime.Now && p.data_fi >= DateTime.Now).ToList();
+            list_peliculas.ItemsSource = peliculas;
         }
 
-    private void CargarGeneros()
+        private void CargarGeneros()
         {
-            // Añadimos los géneros al ComboBox
+            subFilterBox.Items.Clear();
             subFilterBox.Items.Add("-");
-            subFilterBox.Items.Add(genres.Accio);
-            subFilterBox.Items.Add(genres.Aventura);
-            subFilterBox.Items.Add(genres.Ciencia_Ficcio);
-            subFilterBox.Items.Add(genres.Comedia);
-            subFilterBox.Items.Add(genres.Documental);
-            subFilterBox.Items.Add(genres.Drama);
-            subFilterBox.Items.Add(genres.Fantasia);
-            subFilterBox.Items.Add(genres.Musical);
-            subFilterBox.Items.Add(genres.Suspense);
-            subFilterBox.Items.Add(genres.Terror);
-
-            subFilterBox.SelectedIndex = 0;  // Seleccionamos un género por defecto
+            foreach (var genero in Enum.GetValues(typeof(genres)))
+            {
+                subFilterBox.Items.Add(genero);
+            }
+            subFilterBox.SelectedIndex = 0;
         }
 
         private void CargarIdiomas()
         {
-            // Añadimos los idiomas al ComboBox
+            subFilterBox.Items.Clear();
             subFilterBox.Items.Add("-");
-            subFilterBox.Items.Add(idiomas.Ingles);
-            subFilterBox.Items.Add(idiomas.Castellano);
-            subFilterBox.Items.Add(idiomas.Catalan);
-            subFilterBox.SelectedIndex = 0;  // Seleccionamos un idioma por defecto
+            foreach (var idioma in Enum.GetValues(typeof(idiomas)))
+            {
+                subFilterBox.Items.Add(idioma);
+            }
+            subFilterBox.SelectedIndex = 0;
         }
 
         private void CargarFiltros()
         {
-            // Añadimos los filtros al ComboBox
             filterBox.Items.Add("-");
             filterBox.Items.Add("Genero");
             filterBox.Items.Add("Fecha");
             filterBox.Items.Add("Idioma");
-            filterBox.SelectedIndex = 0;  // Seleccionamos un género por defecto
+            filterBox.SelectedIndex = 0;
         }
-
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string tipoSeleccionado = filterBox.SelectedItem.ToString();
             if (!first)
             {
                 subFilter = false;
                 subFilterBox.Items.Clear();
                 list_peliculas.ItemsSource = peliculas;
-
-            }
-            if (tipoSeleccionado == "-")
-            {
-                if (first)
-                {
-                    list_peliculas.Items.Clear();
-                    first = false;
-                }
-                list_peliculas.ItemsSource = peliculas;
-                subFilter = false;
-                subFilterBox.Visibility = Visibility.Hidden;
-                dataPicker.Visibility = Visibility.Hidden;
-            }
-            else if (tipoSeleccionado == "Genero")
-            {
-                CargarGeneros();
-                subFilter = true;
-                subFilterBox.Visibility = Visibility.Visible;
-                dataPicker.Visibility = Visibility.Hidden;
-            }
-            else if (tipoSeleccionado == "Fecha")
-            {
-                subFilter = false;
-                subFilterBox.Visibility = Visibility.Hidden;
-                dataPicker.Visibility = Visibility.Visible;
-            }
-            else if (tipoSeleccionado == "Idioma")
-            {
-                CargarIdiomas();
-                subFilter = true;
-                subFilterBox.Visibility = Visibility.Visible;
-                dataPicker.Visibility = Visibility.Hidden;
             }
 
+            string tipoSeleccionado = filterBox.SelectedItem.ToString();
+            switch (tipoSeleccionado)
+            {
+                case "-":
+                    list_peliculas.ItemsSource = peliculas;
+                    subFilterBox.Visibility = Visibility.Hidden;
+                    dataPicker.Visibility = Visibility.Hidden;
+                    break;
+                case "Genero":
+                    CargarGeneros();
+                    subFilterBox.Visibility = Visibility.Visible;
+                    dataPicker.Visibility = Visibility.Hidden;
+                    subFilter = true;
+                    break;
+                case "Fecha":
+                    subFilterBox.Visibility = Visibility.Hidden;
+                    dataPicker.Visibility = Visibility.Visible;
+                    subFilter = false;
+                    break;
+                case "Idioma":
+                    CargarIdiomas();
+                    subFilterBox.Visibility = Visibility.Visible;
+                    dataPicker.Visibility = Visibility.Hidden;
+                    subFilter = true;
+                    break;
+            }
+            first = false;
         }
 
         private void subFilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -204,36 +156,32 @@ namespace AppCine
             {
                 string subTipoSeleccionado = subFilterBox.SelectedItem.ToString();
                 string tipoSeleccionado = filterBox.SelectedItem.ToString();
-                if (subTipoSeleccionado == "-" || subTipoSeleccionado == null)
+
+                if (subTipoSeleccionado == "-")
                 {
-                    if (first)
-                    {
-                        list_peliculas.Items.Clear();
-                        first = false;
-                    }
                     list_peliculas.ItemsSource = peliculas;
                 }
                 else if (tipoSeleccionado == "Idioma")
                 {
-                    //mostrar solo las peliculas que esten en ese idioma
                     var peliculasFiltradas = peliculas.Where(p => p.idioma.ToString() == subTipoSeleccionado).ToList();
                     list_peliculas.ItemsSource = peliculasFiltradas;
                 }
-                else
+                else if (tipoSeleccionado == "Genero")
                 {
                     var peliculasFiltradas = peliculas.Where(p => p.generos.Any(g => g.ToString() == subTipoSeleccionado)).ToList();
                     list_peliculas.ItemsSource = peliculasFiltradas;
                 }
             }
         }
+
         private void dataPicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            DateTime fechaSeleccionada = dataPicker.SelectedDate.Value;
-            //mostrar solo las peliculas que se proyecten en esa fecha  rango inicio y fin
-            var peliculasFiltradas = peliculas.Where(p => p.data_inici <= fechaSeleccionada && p.data_fi >= fechaSeleccionada).ToList();
-            list_peliculas.ItemsSource = peliculasFiltradas;
-
+            if (dataPicker.SelectedDate.HasValue)
+            {
+                DateTime fechaSeleccionada = dataPicker.SelectedDate.Value;
+                var peliculasFiltradas = peliculas.Where(p => p.data_inici <= fechaSeleccionada && p.data_fi >= fechaSeleccionada).ToList();
+                list_peliculas.ItemsSource = peliculasFiltradas;
+            }
         }
     }
 }
-
