@@ -78,6 +78,7 @@ namespace AppCine
             }
 
             peliculas = peliculas.Where(p => p.data_inici <= DateTime.Now && p.data_fi >= DateTime.Now).ToList();
+            list_peliculas.Items.Clear();
             list_peliculas.ItemsSource = peliculas;
         }
 
