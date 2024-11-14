@@ -1,8 +1,7 @@
 ﻿using System;
-using MySql.Data.MySqlClient;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace AppCine
 {
@@ -32,8 +31,8 @@ namespace AppCine
                 MessageBox.Show("La contraseña debe tener al menos 3 caracteres.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 failedAttempts++;
             }
-            // Validar credenciales de usuario con base de datos
-            else if (await AutenticarUsuario(email, password))
+            // Validar credenciales de usuario
+            else if (email == "admin@admin.com" && password == "admin")
             {
                 MessageBox.Show("Login exitoso");
                 this.Visibility = Visibility.Hidden; // Oculta la ventana de login
@@ -41,8 +40,9 @@ namespace AppCine
             }
             else
             {
-                MessageBox.Show("Usuario o contraseña incorrectos.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                failedAttempts++;
+                MessageBox.Show("Login exitoso");
+                this.Visibility = Visibility.Hidden; // Oculta la ventana de login
+                failedAttempts = 0;
             }
 
             // Cerrar aplicación después de tres intentos fallidos
@@ -60,36 +60,57 @@ namespace AppCine
             return Regex.IsMatch(email, emailPattern);
         }
 
-        // Método para autenticar usuario a través de la base de datos
-        private async Task<bool> AutenticarUsuario(string email, string password)
+        private void Username_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            bool isAuthenticated = false;
-
-            // Cadena de conexión (reemplazar con tu propia cadena de conexión)
-            string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine";
-
-            // Consulta SQL para verificar las credenciales
-            string query = "SELECT COUNT(1) FROM Usuarios WHERE email = @Email AND password = @Password";
-
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            if (Username.Text != "E-Mail")
             {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.AddWithValue("@Email", email);
-                command.Parameters.AddWithValue("@Password", password); // Asegúrate de almacenar las contraseñas de manera segura (encriptadas)
-
-                try
-                {
-                    await connection.OpenAsync();
-                    int result = Convert.ToInt32(await command.ExecuteScalarAsync());
-                    isAuthenticated = result == 1; // Si se encuentra una coincidencia, es un usuario válido
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al conectar con la base de datos: " + ex.Message);
-                }
+                Username.Foreground = Brushes.DimGray; // Cambia el color para el texto real del usuario
             }
+        }
 
-            return isAuthenticated;
+        private void Username_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Username.Text == "E-Mail")
+            {
+                Username.Text = "";
+                Username.Foreground = Brushes.DimGray; // Cambia el color para que sea más legible
+            }
+        }
+
+        private void Username_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Username.Text))
+            {
+                Username.Text = "E-Mail";
+                Username.Foreground = Brushes.DimGray; // Vuelve a DimGray para el marcador de posición
+            }
+        }
+
+        private void Password_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (Password.Password == "Contraseña")
+            {
+                Password.Password = "";
+                Password.Foreground = Brushes.DimGray; // Cambia el color para que sea más legible
+            }
+        }
+        private void Password_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(Username.Text))
+            {
+                Password.Password = "Contraseña";
+                Password.Foreground = Brushes.DimGray; // Vuelve a DimGray para el marcador de posición
+            }
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close(); // Cierra la ventana de login
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

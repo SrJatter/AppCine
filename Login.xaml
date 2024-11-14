@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppCine"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         WindowStyle="None"
-        Title="Login" Height="300" Width="400" Background="DarkSlateGray">
+        Title="Login" Height="300" Width="400">
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="1,0" StartPoint="0,1">
@@ -19,15 +20,36 @@
 
         <Label Content="LOGIN" FontSize="22" Foreground="White" HorizontalAlignment="Center" Margin="0,22,0,22"></Label>
         <TextBox x:Name="Username" Height="35" Background="#20242F"
-                     Foreground="DimGray" FontSize="15" BorderThickness="0"
-                     VerticalContentAlignment="Center" Padding="5,0,0,0" Margin="88,85,88,180">E-mail: </TextBox>
-        <PasswordBox x:Name="Password" Height="35" Background="#20242F" 
-                     Foreground="DimGray" FontSize="15" BorderThickness="0" 
-                     VerticalContentAlignment="Center" 
-                     Margin="0,150,0,0" VerticalAlignment="Top" Width="223"
-                     />
+         Foreground="DimGray" FontSize="15" BorderThickness="0"
+         VerticalContentAlignment="Center" Padding="5,0,0,0"
+         Margin="88,85,88,180" TextChanged="Username_TextChanged" 
+         GotFocus="Username_GotFocus" LostFocus="Username_LostFocus">
+            E-Mail
+        </TextBox>
+        <Grid Width="223" Height="35" VerticalAlignment="Top" Margin="0,150,0,0">
+            <!-- PasswordBox real -->
+            <PasswordBox x:Name="Password" Height="35" Background="#20242F"
+                 Foreground="DimGray" FontSize="15" BorderThickness="0"
+                 VerticalContentAlignment="Center" Padding="5,8,0,0"
+                 GotFocus="Password_GotFocus" LostFocus="Password_LostFocus" />
+
+            <!-- Texto de marcador de posición -->
+            <TextBlock x:Name="PasswordPlaceholder" Text="Contraseña"
+               Foreground="DimGray" FontSize="15"
+               VerticalAlignment="Top" Padding="5,0,0,0"
+               IsHitTestVisible="False" HorizontalAlignment="Left"/>
+        </Grid>
         <Button Content="Login" FontSize="18" HorizontalAlignment="Left" Background="LightCyan" Margin="226,211,0,0" VerticalAlignment="Top" Width="86" Click="Button_Click"/>
-        <Button Content="Cancel" FontSize="18" HorizontalAlignment="Left" Background="Pink" Margin="88,211,0,0" VerticalAlignment="Top" Width="88"/>
-        
+        <Button Content="Cancel" FontSize="22" HorizontalAlignment="Left" Background="Pink" Margin="88,211,0,0" VerticalAlignment="Top" Width="88" Click="CancelButton_Click"/>
+        <Label HorizontalAlignment="Left" Foreground="#F4F0F4" Margin="111,0,0,14" VerticalAlignment="Bottom" FontSize="12">¿No tienes cuenta?</Label>
+        <Button Content="Regístrate" FontSize="12" HorizontalAlignment="Left" Background="Transparent" Foreground="White" Margin="226,0,0,17" VerticalAlignment="Bottom" Click="Button_Click_1" 
+                BorderThickness="0" Cursor="Hand">
+            <Button.Foreground>
+                <LinearGradientBrush EndPoint="1,0" StartPoint="0,1">
+                    <GradientStop Color="#8D849D" Offset="0.4629"></GradientStop>
+                    <GradientStop Color="#CFC7DD" Offset="0.4629"></GradientStop>
+                </LinearGradientBrush>
+            </Button.Foreground>
+        </Button>
     </Grid>
 </Window>
