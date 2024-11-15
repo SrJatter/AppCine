@@ -19,7 +19,7 @@
                     <Setter Property="Data" Value="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsAdmin}" Value="True">
-                            <Setter Property="Fill" Value="Yellow" />
+                            <Setter Property="Fill" Value="Orange" />
                             <Setter Property="Data" Value="M12,15C7.58,15 4,16.79 4,19V21H20V19C20,16.79 16.42,15 12,15M8,9A4,4 0 0,0 12,13A4,4 0 0,0 16,9M11.5,2C11.2,2 11,2.21 11,2.5V5.5H10V3C10,3 7.75,3.86 7.75,6.75C7.75,6.75 7,6.89 7,8H17C16.95,6.89 16.25,6.75 16.25,6.75C16.25,3.86 14,3 14,3V5.5H13V2.5C13,2.21 12.81,2 12.5,2H11.5Z" />
                         </DataTrigger>
                     </Style.Triggers>
@@ -30,9 +30,20 @@
         <ListBox Grid.Column="0" SelectionMode="Single" SelectionChanged="sidebar_SelectionChanged" x:Name="sidebar" Margin="0,50,0,50"  BorderThickness="0">
 
             <local:NavButton Navlink="/pages/Taquilla.xaml" Margin="3" Padding="6" Icon="M15.58,16.8L12,14.5L8.42,16.8L9.5,12.68L6.21,10L10.46,9.74L12,5.8L13.54,9.74L17.79,10L14.5,12.68M20,12C20,10.89 20.9,10 22,10V6C22,4.89 21.1,4 20,4H4A2,2 0 0,0 2,6V10C3.11,10 4,10.9 4,12A2,2 0 0,1 2,14V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V14A2,2 0 0,1 20,12Z"/>
-            <local:NavButton Navlink="/Pages/Page4.xaml" Margin="3" Padding="6" Icon="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z" Cursor="Hand"/>
-            <local:NavButton Navlink="/Pages/Page4.xaml" Margin="3" Padding="6" Icon="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" Cursor="Hand"/>
-            <local:NavButton Navlink="/Pages/Page4.xaml" Margin="3" Padding="6" Icon="M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z" />
+            <local:NavButton Navlink="/Pages/Page4.xaml" Margin="3" Padding="6" Icon="M9,16V10H5L12,3L19,10H15V16H9M5,20V18H19V20H5Z" x:Name="NavButtonAdmin" Cursor="Hand">
+                <local:NavButton.Style>
+                    <Style TargetType="local:NavButton">
+                        <Setter Property="Visibility" Value="Collapsed" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsAdmin, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </local:NavButton.Style>
+            </local:NavButton>
+            <local:NavButton Navlink="/Pages/About.xaml" Margin="3" Padding="6" Icon="M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" Cursor="Hand"/>
+            <local:NavButton Navlink="/Pages/Page4.xaml" Margin="3" Padding="6" Icon="M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z" Cursor="Hand"/>
             
         </ListBox>
 

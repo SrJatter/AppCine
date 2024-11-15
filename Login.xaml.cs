@@ -22,7 +22,7 @@ namespace AppCine
             string password = Password.Password;
 
             // Validar email no vacío y en formato correcto
-            if (email == "a" && password == "a")
+            if (email == "a" && password == "a") // !!!!bypass borrar cuando se tenga que entregar!!!!!
             {
                 this.Visibility = Visibility.Hidden; // Oculta la ventana de login
                 failedAttempts = 0; // Reinicia los intentos fallidos al loguearse correctamente
