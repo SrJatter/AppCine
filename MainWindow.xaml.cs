@@ -1,45 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using System.ComponentModel;
+using System.Windows.Input;
 
 namespace AppCine
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public bool IsAdmin { get; set; } = true;
+        private bool exitButtonClicked = false; // Bandera para detectar clic en "Exit"
+        public bool exitStatus = false;
+
         public MainWindow()
         {
             InitializeComponent();
             DataContext = this;
+            this.Closing += MainWindow_Closing;
         }
 
         private void sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (sidebar.SelectedItem is NavButton selected)
+            {
+                if (selected.Name == "Exit")
+                {
+                    exitButtonClicked = true; // Indicar que se hizo clic en el botón "Exit"
+                    this.DialogResult = false;
+                    this.Close();
+                }
 
-            var selected = sidebar.SelectedItem as NavButton;
-
-            navframe.Navigate(selected.Navlink);
-
+                // Navegar solo si no se seleccionó "Exit"
+                if (selected.Navlink != null)
+                {
+                    navframe.Navigate(selected.Navlink);
+                }
+            }
         }
+
         private void mouseEnter(object sender, MouseEventArgs e)
         {
             if (sender is FrameworkElement targetElement)
             {
-                popup_uc.PlacementTarget = targetElement; 
+                popup_uc.PlacementTarget = targetElement;
                 popup_uc.Placement = PlacementMode.Right;
                 popup_uc.VerticalOffset = -10;
                 popup_uc.IsOpen = true;
@@ -70,6 +76,15 @@ namespace AppCine
             popup_uc.IsOpen = false;
         }
 
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (!exitButtonClicked)
+            {
+                Trace.WriteLine("Cierre de ventana con Alt+F4 o X");
+                exitStatus = true;
+            }
+            // Reiniciar la bandera
+            exitButtonClicked = false;
+        }
     }
 }
-  

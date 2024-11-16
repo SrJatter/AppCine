@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,25 +17,41 @@ namespace AppCine
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            Login login = new Login();
-            bool? r1 = login.ShowDialog();
-            if(r1 != true)
+            bool exitApp = false; // Bandera para determinar si se debe cerrar la aplicación
+
+            while (!exitApp)
             {
-                if (login.failedAttempts == 3)
+                Login login = new Login();
+                bool? r1 = login.ShowDialog();
+                if (r1 != true)
                 {
-                    Current.Shutdown();
-                } else
-                {
-                    MainWindow mainWindow = new MainWindow();
-                    bool? r2 = mainWindow.ShowDialog();
-                    if (r2 != true)
+                    if (login.failedAttempts == 3)
                     {
-                        Current.Shutdown();
+                        exitApp = true;
                     }
+                    else if (login.cancelStatus == true){
+                        exitApp = true;
+                    }
+                    else
+                    {
+                        MainWindow mainWindow = new MainWindow();
+                        bool? r2 = mainWindow.ShowDialog();
+                        if (r2 != true)
+                        {
+                            if (mainWindow.exitStatus == true)
+                            {
+                                exitApp = true;
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                    }
+
                 }
-
+                Current.Shutdown();
             }
-
         }
     }
 }

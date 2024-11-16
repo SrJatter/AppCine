@@ -150,3 +150,4 @@ C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\About.g.
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\About.baml
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\PopupUserControl.g.cs
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\PopupUserControl.baml
+C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\App.baml

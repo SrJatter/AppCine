@@ -4,16 +4,20 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace AppCine
 {
     public partial class Login : Window
     {
         public int failedAttempts = 0; // Contador para los intentos fallidos de login
+        public bool cancelStatus = false; // Status del boton de cancelamiento
 
         public Login()
         {
             InitializeComponent();
+            this.Closing += Login_Closing;
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -146,12 +150,18 @@ namespace AppCine
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close(); // Cierra la ventana de login
+            this.Close();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             // Código para otro botón opcional
+        }
+
+        private void Login_Closing(object sender, CancelEventArgs e)
+        {
+            Trace.WriteLine("Cierre de ventana con Alt+F4 o con boton cancel");
+            cancelStatus = true;
         }
     }
 }
