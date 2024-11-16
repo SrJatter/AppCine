@@ -148,3 +148,5 @@ C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\AppCine.exe
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\AppCine.pdb
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\About.g.cs
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\About.baml
+C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\PopupUserControl.g.cs
+C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\PopupUserControl.baml

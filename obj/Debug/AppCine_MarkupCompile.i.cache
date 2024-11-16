@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\App.xaml
-6101689834
+71360661306
 
-161782713654
+17678671514
 331263561782
-Login.xaml;MainWindow.xaml;pages\About.xaml;pages\Page4.xaml;pages\Taquilla.xaml;Themes\Generic.xaml;
+Login.xaml;MainWindow.xaml;pages\About.xaml;pages\Page4.xaml;pages\Taquilla.xaml;PopupUserControl.xaml;Themes\Generic.xaml;
 
-False
+True
 

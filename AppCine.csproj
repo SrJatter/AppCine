@@ -146,6 +146,9 @@
     <Compile Include="pages\Taquilla.xaml.cs">
       <DependentUpon>Taquilla.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PopupUserControl.xaml.cs">
+      <DependentUpon>PopupUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="utils\Converters.cs" />
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
@@ -174,6 +177,10 @@
     <Page Include="pages\Taquilla.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PopupUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>

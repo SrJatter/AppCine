@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Controls.Primitives;
 
 namespace AppCine
 {
@@ -34,6 +35,41 @@ namespace AppCine
             navframe.Navigate(selected.Navlink);
 
         }
+        private void mouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender is FrameworkElement targetElement)
+            {
+                popup_uc.PlacementTarget = targetElement; 
+                popup_uc.Placement = PlacementMode.Right;
+                popup_uc.VerticalOffset = -10;
+                popup_uc.IsOpen = true;
+
+                switch (targetElement.Name)
+                {
+                    case "Reserve":
+                        Header.PopupText.Text = "Reservar";
+                        break;
+                    case "Upload":
+                        Header.PopupText.Text = "Subir Peli";
+                        break;
+                    case "About":
+                        Header.PopupText.Text = "Info";
+                        break;
+                    case "Exit":
+                        Header.PopupText.Text = "Salir";
+                        break;
+                    default:
+                        Header.PopupText.Text = "Acción";
+                        break;
+                }
+            }
+        }
+
+        private void mouseExit(object sender, MouseEventArgs e)
+        {
+            popup_uc.IsOpen = false;
+        }
+
     }
 }
   
