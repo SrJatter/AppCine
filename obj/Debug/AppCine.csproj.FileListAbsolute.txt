@@ -157,3 +157,5 @@ C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\App.baml
 C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\About.baml
 C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\PopupUserControl.baml
 C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\AppCine_Content.g.cs
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\Themes\Dark.baml
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\Themes\Light.baml

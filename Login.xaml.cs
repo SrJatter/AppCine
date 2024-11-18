@@ -11,6 +11,7 @@ namespace AppCine
 {
     public partial class Login : Window
     {
+        public bool authMode = true; // Modo de autenticación
         public int failedAttempts = 0; // Contador para los intentos fallidos de login
         public bool cancelStatus = false; // Status del boton de cancelamiento
         public static bool IsAdmin { get; private set; }
@@ -166,6 +167,8 @@ namespace AppCine
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            if (authMode) authMode = false;
+            else authMode = true;
             // Código para otro botón opcional
         }
 
