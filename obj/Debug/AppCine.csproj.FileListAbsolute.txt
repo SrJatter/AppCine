@@ -151,3 +151,9 @@ C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\About.ba
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\PopupUserControl.g.cs
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\PopupUserControl.baml
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\App.baml
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\About.g.cs
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\PopupUserControl.g.cs
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\App.baml
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\About.baml
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\PopupUserControl.baml
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\AppCine_Content.g.cs

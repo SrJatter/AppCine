@@ -220,5 +220,8 @@
   <ItemGroup>
     <Resource Include="pages\persona.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="db\AppCine_DB.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
