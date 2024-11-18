@@ -13,6 +13,7 @@ namespace AppCine
     {
         public int failedAttempts = 0; // Contador para los intentos fallidos de login
         public bool cancelStatus = false; // Status del boton de cancelamiento
+        public static bool IsAdmin { get; private set; }
 
         public Login()
         {
@@ -28,6 +29,7 @@ namespace AppCine
             // Validar email no vacío y en formato correcto
             if (email == "a" && password == "a") // !!!!bypass borrar cuando se tenga que entregar!!!!!
             {
+                IsAdmin = true;
                 this.Visibility = Visibility.Hidden; // Oculta la ventana de login
                 failedAttempts = 0; // Reinicia los intentos fallidos al loguearse correctamente
             }
@@ -45,7 +47,16 @@ namespace AppCine
             // Validar credenciales de usuario con base de datos
             else if (await AutenticarUsuario(email, password))
             {
-                MessageBox.Show("Login exitoso");
+                if (email != "admin@admin.com")
+                {
+                    MessageBox.Show("Login exitoso");
+                    IsAdmin = false;
+                }
+                else
+                {
+                    MessageBox.Show("Login Administrativo exitoso");
+                    IsAdmin = true;
+                }
                 this.Visibility = Visibility.Hidden; // Oculta la ventana de login
                 failedAttempts = 0; // Reinicia los intentos fallidos al loguearse correctamente
             }

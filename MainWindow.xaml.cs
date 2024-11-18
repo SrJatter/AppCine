@@ -9,15 +9,38 @@ using System.Windows.Input;
 
 namespace AppCine
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        public bool IsAdmin { get; set; } = true;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private bool _themeChange;
+        public bool ThemeChange
+        {
+            get => _themeChange;
+            set
+            {
+                if (_themeChange != value)
+                {
+                    _themeChange = value;
+                    OnPropertyChanged(nameof(ThemeChange));
+                }
+            }
+        }
+    
+        public bool IsAdmin { get; private set; }
         private bool exitButtonClicked = false; // Bandera para detectar clic en "Exit"
         public bool exitStatus = false;
 
         public MainWindow()
         {
             InitializeComponent();
+            IsAdmin = Login.IsAdmin;
+            ThemeChange = true;
             DataContext = this;
             this.Closing += MainWindow_Closing;
         }
@@ -53,16 +76,20 @@ namespace AppCine
                 switch (targetElement.Name)
                 {
                     case "Reserve":
-                        Header.PopupText.Text = "Reservar";
+                        Header.PopupText.Text = "Comprar Entradas";
+                        Header.PopupText.FontSize = 16;
                         break;
                     case "Upload":
-                        Header.PopupText.Text = "Subir Peli";
+                        Header.PopupText.Text = "Subir Pelicula";
+                        Header.PopupText.FontSize = 20;
                         break;
                     case "About":
-                        Header.PopupText.Text = "Info";
+                        Header.PopupText.Text = "Informacion Aplicacion";
+                        Header.PopupText.FontSize = 13;
                         break;
                     case "Exit":
-                        Header.PopupText.Text = "Salir";
+                        Header.PopupText.Text = "Cerrar Sesion";
+                        Header.PopupText.FontSize = 20;
                         break;
                     default:
                         Header.PopupText.Text = "Acción";
@@ -85,6 +112,25 @@ namespace AppCine
             }
             // Reiniciar la bandera
             exitButtonClicked = false;
+        }
+
+        private void Moon_Sun_Click(object sender, MouseEventArgs e)
+        {
+            Trace.WriteLine("Pulsacion");
+            ThemeChange = !ThemeChange; // Alterna entre true y false
+            var themeUri = ThemeChange
+                ? new Uri("Themes/Light.xaml", UriKind.Relative)
+                : new Uri("Themes/Dark.xaml", UriKind.Relative);
+            ChangeTheme(themeUri);
+        }
+
+
+        private void ChangeTheme(Uri themeuri)
+        {
+            ResourceDictionary Theme = new ResourceDictionary() { Source = themeuri};
+
+            App.Current.Resources.Clear();
+            App.Current.Resources.MergedDictionaries.Add(Theme);
         }
     }
 }
