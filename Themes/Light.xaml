@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <SolidColorBrush Color="white" x:Key="Backdrop"/>
+    <SolidColorBrush Color="Black" x:Key="Text"/>
+    <SolidColorBrush Color="#e9ecef" x:Key="Backdrop_Page"/>
+    <SolidColorBrush Color="Black" x:Key="Text_Popup"/>
+    <SolidColorBrush Color="#a0a0a0" x:Key="Backdrop_Mineu"/>
+    <SolidColorBrush Color="AliceBlue" x:Key="Backdrop_Popup"/>
+    <SolidColorBrush Color="Blue" x:Key="HyperLink_Text"/>
+</ResourceDictionary>

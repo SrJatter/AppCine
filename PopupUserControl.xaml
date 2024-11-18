@@ -21,12 +21,13 @@
                     C15,33 10,33 10,25
                     L10,10
                     z"
-              Fill="AliceBlue"
+              Fill="{DynamicResource Backdrop_Popup}"
               Height="50"
               Width="146"
               Stroke="#96a5b2"
               Stretch="Fill"/>
         <TextBlock x:Name="PopupText"
+                   Foreground="{DynamicResource Text_Popup}"
                    FontSize="20"
                    Panel.ZIndex="1"
                    HorizontalAlignment="Center"
