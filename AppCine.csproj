@@ -230,6 +230,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="db\AppCine_DB.sql" />
+    <Resource Include="pages\images\David.png" />
+    <Resource Include="pages\images\Hector.png" />
+    <Resource Include="pages\images\Javier.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -36,6 +36,7 @@ namespace AppCine
         private bool exitButtonClicked = false; // Bandera para detectar clic en "Exit"
         public bool exitStatus = false;
 
+
         public MainWindow()
         {
             InitializeComponent();
@@ -43,6 +44,8 @@ namespace AppCine
             ThemeChange = true;
             DataContext = this;
             this.Closing += MainWindow_Closing;
+            sidebar.SelectedItem = Taquilla;
+            navframe.Navigate(new Uri("/pages/Taquilla.xaml", UriKind.Relative));
         }
 
         private void sidebar_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -76,8 +79,8 @@ namespace AppCine
                 switch (targetElement.Name)
                 {
                     case "Reserve":
-                        Header.PopupText.Text = "Comprar Entradas";
-                        Header.PopupText.FontSize = 16;
+                        Header.PopupText.Text = "Taquilla";
+                        Header.PopupText.FontSize = 22;
                         break;
                     case "Upload":
                         Header.PopupText.Text = "Subir Pelicula";
