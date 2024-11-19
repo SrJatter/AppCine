@@ -1,0 +1,123 @@
+﻿<Window x:Class="SideBar_Nav.Pages.Upload_Widgets"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Subir mediante Widgets" 
+        Width="600" Height="450">
+    <DockPanel Background="{DynamicResource Backdrop}">
+        <!-- Título en la parte superior -->
+        <TextBlock Text="Subir mediante Widgets"
+                   FontSize="50"
+                   HorizontalAlignment="Center"
+                   Margin="10"
+                   DockPanel.Dock="Top" Foreground="{DynamicResource Text}" />
+
+        <!-- Botón en la parte inferior -->
+        <Button Content="Subir Información" 
+                Width="150" 
+                Height="40" 
+                HorizontalAlignment="Center" 
+                Margin="10"
+                DockPanel.Dock="Bottom" 
+                Click="OnUploadButtonClick"/>
+
+        <!-- Contenido principal al centro -->
+        <StackPanel Orientation="Vertical" Margin="20" HorizontalAlignment="Center">
+            <!-- Título -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Foreground="{DynamicResource Text}" Text="Título:" FontSize="14" FontWeight="Bold" Margin="0,5,10,5" />
+                <TextBox Name="TitleTextBox" Width="400" />
+            </StackPanel>
+
+            <!-- Selección de sala e idioma -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Sala:" FontSize="14" FontWeight="Bold" Margin="0,5" Foreground="{DynamicResource Text}" />
+                    <ComboBox Name="SalaComboBox" Width="40">
+                        <ComboBoxItem Content="1" />
+                        <ComboBoxItem Content="2" />
+                        <ComboBoxItem Content="3" />
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Idioma:" FontSize="14" FontWeight="Bold" Margin="0,5" Foreground="{DynamicResource Text}"/>
+                    <ComboBox Name="IdiomaComboBox" Width="120">
+                        <ComboBoxItem Content="Castellano" />
+                        <ComboBoxItem Content="Inglés" />
+                        <ComboBoxItem Content="Catalán" />
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Duración -->
+                <TextBlock Text="Duración (min):" FontSize="14" FontWeight="Bold" Margin="10,20,10,5" Foreground="{DynamicResource Text}"/>
+                <TextBox Name="DuracionTextBox" 
+                 Width="43" 
+                 Height="30" 
+                 FontSize="20" 
+                 TextAlignment="Center" 
+                 MaxLength="3" 
+                 PreviewTextInput="ValidateMinuteInput" />
+            </StackPanel>
+
+            <!-- Fechas -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <StackPanel Margin="0,0,20,0">
+                    <TextBlock Text="Fecha Inicio:" FontSize="14" FontWeight="Bold" Margin="0,5" Foreground="{DynamicResource Text}"/>
+                    <DatePicker Name="FechaInicioPicker" />
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Fecha Fin:" FontSize="14" FontWeight="Bold" Margin="0,5" Foreground="{DynamicResource Text}"/>
+                    <DatePicker Name="FechaFinPicker" />
+                </StackPanel>
+                <!-- Hora inicio -->
+                <TextBlock Text="Hora Inicio:" FontSize="14" FontWeight="Bold" Margin="0,5,10,5" Foreground="{DynamicResource Text}"/>
+                <TextBox Name="HoraInicioTextBox_Hora" 
+                     Width="43" 
+                     Height="30" 
+                     FontSize="20" 
+                     TextAlignment="Center" 
+                     MaxLength="2" 
+                     PreviewTextInput="ValidateHourInput"
+                     LostFocus="FixHourInput" />
+                <TextBlock Text=":" FontSize="30" VerticalAlignment="Center" Margin="5,0" />
+                <TextBox Name="HoraInicioTextBox_Minutos" 
+                         Width="43" 
+                         Height="30" 
+                         FontSize="20" 
+                         TextAlignment="Center" 
+                         MaxLength="2" 
+                         PreviewTextInput="ValidateMinuteInput"
+                         LostFocus="FixMinuteInput" />
+            </StackPanel>
+
+            <!-- Genero 1 -->
+            <StackPanel Orientation="Horizontal" Margin="0,5">
+                <TextBlock Text="Genero 1:" FontSize="14" FontWeight="Bold" Margin="5,5,10,5" Foreground="{DynamicResource Text}"/>
+                <ComboBox Name="Genero1ComboBox" Width="88">
+                    <ComboBoxItem Content="-" />
+                    <ComboBoxItem Content="1" />
+                    <ComboBoxItem Content="2" />
+                    <ComboBoxItem Content="3" />
+                </ComboBox>
+
+                <!-- Genero 2 -->
+
+                <TextBlock Text="Genero 2:" FontSize="14" FontWeight="Bold" Margin="5,5,10,5" Foreground="{DynamicResource Text}"/>
+                <ComboBox Name="Genero2ComboBox" Width="88">
+                    <ComboBoxItem Content="-" />
+                    <ComboBoxItem Content="1" />
+                    <ComboBoxItem Content="2" />
+                    <ComboBoxItem Content="3" />
+                </ComboBox>
+                <!-- Genero 3 -->
+
+                <TextBlock Text="Genero 3:" FontSize="14" FontWeight="Bold" Margin="5,5,10,5" Foreground="{DynamicResource Text}"/>
+                <ComboBox Name="Genero3ComboBox" Width="88">
+                    <ComboBoxItem Content="-" />
+                    <ComboBoxItem Content="1" />
+                    <ComboBoxItem Content="2" />
+                    <ComboBoxItem Content="3" />
+                </ComboBox>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</Window>

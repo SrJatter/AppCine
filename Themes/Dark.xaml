@@ -7,6 +7,7 @@
     <SolidColorBrush Color="#18172c" x:Key="Backdrop_Mineu"/>
     <SolidColorBrush Color="AliceBlue" x:Key="Text_Popup"/>
     <SolidColorBrush Color="#bfff00" x:Key="HyperLink_Text"/>
+    <SolidColorBrush Color="#f8f8ff" x:Key="Backdrop_Chairs"/>
 
 
 </ResourceDictionary>

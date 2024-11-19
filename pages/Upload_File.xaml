@@ -1,0 +1,38 @@
+﻿<Window x:Class="SideBar_Nav.Pages.Upload_File"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+            Title="Movie Loader" Height="400" Width="600">
+    <Grid Background="{DynamicResource Backdrop}">
+        <!-- TextBox para ingresar la dirección del archivo -->
+        <TextBox Name="FilePathTextBox" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10,10,90,0" Height="30" />
+
+        <!-- Botón para abrir el explorador de archivos -->
+        <Button Content="Examinar" HorizontalAlignment="Right" VerticalAlignment="Top" Width="75" Height="30" Margin="0,10,10,0" Click="BrowseButton_Click"/>
+
+        <!-- Botón para cargar el archivo -->
+        <Button Content="Cargar Archivo" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="30" Margin="10,50,0,0" Click="LoadFileButton_Click"/>
+
+        <!-- Lista de Películas -->
+        <ListBox Name="MoviesListBox" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,90,0,0" ItemsSource="{Binding Movies}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <!-- Mostrar los detalles de la película -->
+                        <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="16" />
+                        <TextBlock Text="{Binding Sala}" />
+                        <TextBlock Text="{Binding Language}" />
+                        <TextBlock Text="{Binding StartDate}" />
+                        <TextBlock Text="{Binding EndDate}" />
+                        <TextBlock Text="{Binding StartTime}" />
+                        <TextBlock Text="{Binding Duration}" />
+                        <TextBlock Text="{Binding GenresString}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+    </Grid>
+</Window>

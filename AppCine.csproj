@@ -146,6 +146,15 @@
     <Compile Include="pages\Taquilla.xaml.cs">
       <DependentUpon>Taquilla.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\Upload.xaml.cs">
+      <DependentUpon>Upload.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Upload_File.xaml.cs">
+      <DependentUpon>Upload_File.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\Upload_Widgets.xaml.cs">
+      <DependentUpon>Upload_Widgets.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PopupUserControl.xaml.cs">
       <DependentUpon>PopupUserControl.xaml</DependentUpon>
     </Compile>
@@ -177,6 +186,18 @@
     <Page Include="pages\Taquilla.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="pages\Upload.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="pages\Upload_File.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\Upload_Widgets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PopupUserControl.xaml">
       <SubType>Designer</SubType>

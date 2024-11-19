@@ -159,3 +159,12 @@ C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\PopupUserCont
 C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\AppCine_Content.g.cs
 C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\Themes\Dark.baml
 C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\Themes\Light.baml
+C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\Themes\Dark.baml
+C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\Themes\Light.baml
+C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\AppCine_Content.g.cs
+C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\Upload.baml
+C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\Upload.g.cs
+C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\Upload_Widgets.baml
+C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\Upload_Widgets.g.cs
+C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\Upload_File.g.cs
+C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\Upload_File.baml

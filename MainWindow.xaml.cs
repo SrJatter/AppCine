@@ -78,7 +78,7 @@ namespace AppCine
 
                 switch (targetElement.Name)
                 {
-                    case "Reserve":
+                    case "Taquilla":
                         Header.PopupText.Text = "Taquilla";
                         Header.PopupText.FontSize = 22;
                         break;
