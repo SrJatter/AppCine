@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AppCine"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="MainWindow" SnapsToDevicePixels="True"  Height="450" Width="930" >
+        Title="Magic Cinema" SnapsToDevicePixels="True"  Height="450" Width="930" >
     
     <Grid Background="{DynamicResource Backdrop}">
         <Grid.ColumnDefinitions>

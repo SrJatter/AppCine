@@ -45,8 +45,10 @@ namespace SideBar_Nav.Pages
 
             if (File.Exists(filePath))
             {
+                StringBuilder movieData = new StringBuilder();
+
                 // Limpiar la lista de películas antes de agregar las nuevas
-                //Peliculas.Clear();
+                movieData.Clear();
 
                 // Leer el archivo línea por línea
                 foreach (var line in File.ReadLines(filePath))
@@ -103,6 +105,16 @@ namespace SideBar_Nav.Pages
                             }
                         }
 
+                        movieData.AppendLine($"Título: {titulo}");
+                        movieData.AppendLine($"Sala: {sala}");
+                        movieData.AppendLine($"Idioma: {idioma}");
+                        movieData.AppendLine($"Fecha Inicio: {data_inici.ToShortDateString()}");
+                        movieData.AppendLine($"Fecha Fin: {data_fi.ToShortDateString()}");
+                        movieData.AppendLine($"Hora de Inicio: {hora_inici}");
+                        movieData.AppendLine($"Duración: {duracion} minutos");
+                        movieData.AppendLine($"Géneros: {generos_string}");
+                        movieData.AppendLine(new string('-', 20));
+
                         MessageBox.Show("Película añadida correctamente.");
                     }
                     catch (Exception ex)
@@ -111,11 +123,10 @@ namespace SideBar_Nav.Pages
                     }
             }
 
-                    //Pelicula movie = new Pelicula(titulo, sala, idioma, data_inici, data_fi, hora_inici, duracion, generos);
-                    //Peliculas.Add(movie);
+                //Pelicula movie = new Pelicula(titulo, sala, idioma, data_inici, data_fi, hora_inici, duracion, generos);
+                //Peliculas.Add(movie);
 
                 // Mostrar los datos en un MessageBox para verificación
-                StringBuilder movieData = new StringBuilder();
                 /*foreach (var movie in Peliculas)
                 {
                     movieData.AppendLine($"Título: {movie.titulo}");
