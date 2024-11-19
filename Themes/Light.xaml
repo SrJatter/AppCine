@@ -9,4 +9,5 @@
     <SolidColorBrush Color="AliceBlue" x:Key="Backdrop_Popup"/>
     <SolidColorBrush Color="Black" x:Key="Backdrop_Chairs"/>
     <SolidColorBrush Color="Blue" x:Key="HyperLink_Text"/>
+    <SolidColorBrush Color="Black" x:Key="Text_List"/>
 </ResourceDictionary>

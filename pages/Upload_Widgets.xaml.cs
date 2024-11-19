@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -59,6 +61,18 @@ namespace SideBar_Nav.Pages
                 return;
             }
 
+            if (genero1 == "-") { genero1 = ""; }
+            if (genero2 == "-") { genero2 = ""; }
+            if (genero3 == "-") { genero3 = ""; }
+
+            List<string> generosValidos = new List<string>();
+
+            if (!string.IsNullOrWhiteSpace(genero1)) generosValidos.Add(genero1);
+            if (!string.IsNullOrWhiteSpace(genero2)) generosValidos.Add(genero2);
+            if (!string.IsNullOrWhiteSpace(genero3)) generosValidos.Add(genero3);
+
+            string generos_string = string.Join(",", generosValidos);
+
             // Procesar la información
             string mensaje = $"Título: {titulo}\n" +
                                 $"Sala: {sala}\nIdioma: {idioma}\nDuración: {duracion} min\n" +
@@ -67,9 +81,39 @@ namespace SideBar_Nav.Pages
                                 $"Hora Inicio: {horaInicio}\n" +
                                 $"Género 1: {genero1}\nGénero 2: {genero2}\nGénero 3: {genero3}";
 
-            MessageBox.Show(mensaje, "Datos Subidos", MessageBoxButton.OK, MessageBoxImage.Information);
+            string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine;";
 
-            // Aquí puedes añadir lógica para guardar en base de datos, enviar a un servidor, etc.
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    string query = "INSERT INTO pelicula (titulo, numero_sala, idioma, data_inici, data_fi, hora_inici, duracion, generos) " +
+                           "VALUES (@titulo, @numero_sala, @idioma, @data_inici, @data_fi, @hora_inici, @duracion, @generos)";
+                    connection.Open();
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        // Parámetros de la consulta
+                        command.Parameters.AddWithValue("@titulo", titulo);
+                        command.Parameters.AddWithValue("@numero_sala", sala);
+                        command.Parameters.AddWithValue("@idioma", idioma);
+                        command.Parameters.AddWithValue("@data_inici", fechaInicio.Value);
+                        command.Parameters.AddWithValue("@data_fi", fechaFin.Value);
+                        command.Parameters.AddWithValue("@hora_inici", "00:00"); // Hora fija por defecto
+                        command.Parameters.AddWithValue("@duracion", duracion);
+                        command.Parameters.AddWithValue("@generos", generos_string); // Aquí podrías añadir géneros reales si tienes un campo para eso
+
+                        // Ejecución
+                        command.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show("Película añadida correctamente.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al añadir la película: " + ex.Message);
+            }
+        MessageBox.Show(mensaje, "Datos Subidos", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         // Validar entrada para horas (00-23)
         private void ValidateHourInput(object sender, TextCompositionEventArgs e)

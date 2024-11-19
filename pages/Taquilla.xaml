@@ -14,7 +14,7 @@
     </Page.Resources>
 
     <Grid x:Name="Peliculas" Background="{DynamicResource Backdrop_Page}">
-        <ListView Background="{DynamicResource Backdrop_Mineu}" x:Name="list_peliculas" HorizontalAlignment="Left" Height="300" VerticalAlignment="Center" Width="570" Margin="23,0,0,0">
+        <ListView Background="{DynamicResource Backdrop_Mineu}" Foreground="{DynamicResource Text_List}" x:Name="list_peliculas" HorizontalAlignment="Left" Height="300" VerticalAlignment="Center" Width="570" Margin="23,0,0,0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Titulo" Width="Auto" DisplayMemberBinding="{Binding titulo}" />

@@ -25,7 +25,7 @@
             <!-- Título -->
             <StackPanel Orientation="Horizontal" Margin="0,5">
                 <TextBlock Foreground="{DynamicResource Text}" Text="Título:" FontSize="14" FontWeight="Bold" Margin="0,5,10,5" />
-                <TextBox Name="TitleTextBox" Width="400" />
+                <TextBox Name="TitleTextBox" Width="400" FontSize="18" />
             </StackPanel>
 
             <!-- Selección de sala e idioma -->
@@ -42,8 +42,8 @@
                     <TextBlock Text="Idioma:" FontSize="14" FontWeight="Bold" Margin="0,5" Foreground="{DynamicResource Text}"/>
                     <ComboBox Name="IdiomaComboBox" Width="120">
                         <ComboBoxItem Content="Castellano" />
-                        <ComboBoxItem Content="Inglés" />
-                        <ComboBoxItem Content="Catalán" />
+                        <ComboBoxItem Content="Ingles" />
+                        <ComboBoxItem Content="Catalan" />
                     </ComboBox>
                 </StackPanel>
 
@@ -94,9 +94,16 @@
                 <TextBlock Text="Genero 1:" FontSize="14" FontWeight="Bold" Margin="5,5,10,5" Foreground="{DynamicResource Text}"/>
                 <ComboBox Name="Genero1ComboBox" Width="88">
                     <ComboBoxItem Content="-" />
-                    <ComboBoxItem Content="1" />
-                    <ComboBoxItem Content="2" />
-                    <ComboBoxItem Content="3" />
+                    <ComboBoxItem Content="Accio" />
+                    <ComboBoxItem Content="Aventura" />
+                    <ComboBoxItem Content="Ciencia_Ficcio" />
+                    <ComboBoxItem Content="Comedia" />
+                    <ComboBoxItem Content="Documental" />
+                    <ComboBoxItem Content="Drama" />
+                    <ComboBoxItem Content="Fantasia" />
+                    <ComboBoxItem Content="Musical" />
+                    <ComboBoxItem Content="Suspense" />
+                    <ComboBoxItem Content="Terror" />
                 </ComboBox>
 
                 <!-- Genero 2 -->
@@ -104,18 +111,32 @@
                 <TextBlock Text="Genero 2:" FontSize="14" FontWeight="Bold" Margin="5,5,10,5" Foreground="{DynamicResource Text}"/>
                 <ComboBox Name="Genero2ComboBox" Width="88">
                     <ComboBoxItem Content="-" />
-                    <ComboBoxItem Content="1" />
-                    <ComboBoxItem Content="2" />
-                    <ComboBoxItem Content="3" />
+                    <ComboBoxItem Content="Accio" />
+                    <ComboBoxItem Content="Aventura" />
+                    <ComboBoxItem Content="Ciencia_Ficcio" />
+                    <ComboBoxItem Content="Comedia" />
+                    <ComboBoxItem Content="Documental" />
+                    <ComboBoxItem Content="Drama" />
+                    <ComboBoxItem Content="Fantasia" />
+                    <ComboBoxItem Content="Musical" />
+                    <ComboBoxItem Content="Suspense" />
+                    <ComboBoxItem Content="Terror" />
                 </ComboBox>
                 <!-- Genero 3 -->
 
                 <TextBlock Text="Genero 3:" FontSize="14" FontWeight="Bold" Margin="5,5,10,5" Foreground="{DynamicResource Text}"/>
                 <ComboBox Name="Genero3ComboBox" Width="88">
                     <ComboBoxItem Content="-" />
-                    <ComboBoxItem Content="1" />
-                    <ComboBoxItem Content="2" />
-                    <ComboBoxItem Content="3" />
+                    <ComboBoxItem Content="Accio" />
+                    <ComboBoxItem Content="Aventura" />
+                    <ComboBoxItem Content="Ciencia_Ficcio" />
+                    <ComboBoxItem Content="Comedia" />
+                    <ComboBoxItem Content="Documental" />
+                    <ComboBoxItem Content="Drama" />
+                    <ComboBoxItem Content="Fantasia" />
+                    <ComboBoxItem Content="Musical" />
+                    <ComboBoxItem Content="Suspense" />
+                    <ComboBoxItem Content="Terror" />
                 </ComboBox>
             </StackPanel>
         </StackPanel>

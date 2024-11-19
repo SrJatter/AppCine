@@ -16,7 +16,7 @@
         <Button Content="Cargar Archivo" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="30" Margin="10,50,0,0" Click="LoadFileButton_Click"/>
 
         <!-- Lista de Películas -->
-        <ListBox Name="MoviesListBox" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,90,0,0" ItemsSource="{Binding Movies}">
+        <ListBox Name="MoviesListBox" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,90,0,0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>

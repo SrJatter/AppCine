@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Windows;
 using AppCine;
+using AppCine.dto;
 using Microsoft.Win32;
+using MySql.Data.MySqlClient;
 
 namespace SideBar_Nav.Pages
 {
@@ -16,7 +19,7 @@ namespace SideBar_Nav.Pages
         public Upload_File()
         {
             InitializeComponent();
-            //Peliculas = new List<Pelicula>();  // Inicializa la lista de películas
+            //Pelicula Peliculas = new List<Pelicula>();  // Inicializa la lista de películas
             DataContext = this;  // Establece el contexto de datos para los bindings
         }
 
@@ -71,10 +74,45 @@ namespace SideBar_Nav.Pages
                             generos.Add(parts[i]);
                         }
                     }
+                    
+                    string generos_string = string.Join(",", generos);
+
+                    string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine;";
+
+                    try
+                    {
+                        using (MySqlConnection connection = new MySqlConnection(connectionString))
+                        {
+                            string query = "INSERT INTO pelicula (titulo, numero_sala, idioma, data_inici, data_fi, hora_inici, duracion, generos) " +
+                                   "VALUES (@titulo, @numero_sala, @idioma, @data_inici, @data_fi, @hora_inici, @duracion, @generos)";
+                            connection.Open();
+                            using (MySqlCommand command = new MySqlCommand(query, connection))
+                            {
+                                // Parámetros de la consulta
+                                command.Parameters.AddWithValue("@titulo", titulo);
+                                command.Parameters.AddWithValue("@numero_sala", sala);
+                                command.Parameters.AddWithValue("@idioma", idioma);
+                                command.Parameters.AddWithValue("@data_inici", data_inici);
+                                command.Parameters.AddWithValue("@data_fi", data_fi);
+                                command.Parameters.AddWithValue("@hora_inici", hora_inici); 
+                                command.Parameters.AddWithValue("@duracion", duracion);
+                                command.Parameters.AddWithValue("@generos", generos_string);
+
+                                // Ejecución
+                                command.ExecuteNonQuery();
+                            }
+                        }
+
+                        MessageBox.Show("Película añadida correctamente.");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error al añadir la película: " + ex.Message);
+                    }
+            }
 
                     //Pelicula movie = new Pelicula(titulo, sala, idioma, data_inici, data_fi, hora_inici, duracion, generos);
                     //Peliculas.Add(movie);
-                }
 
                 // Mostrar los datos en un MessageBox para verificación
                 StringBuilder movieData = new StringBuilder();
