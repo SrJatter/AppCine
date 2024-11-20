@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using AppCine;
 using AppCine.dto;
 using MySql.Data.MySqlClient;
@@ -20,6 +22,7 @@ namespace SideBar_Nav.Pages
             InitializeComponent();
             CargarPeliculas();  // Cargamos las películas al iniciar
             CargarFiltros();  // Cargamos los filtros en el ComboBox
+            CargarEstadosAsientos();
         }
 
         private void CargarPeliculas()
@@ -185,5 +188,88 @@ namespace SideBar_Nav.Pages
                 list_peliculas.ItemsSource = peliculasFiltradas;
             }
         }
+
+        private void CargarEstadosAsientos()
+        {
+            string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine;";
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "SELECT * FROM asientos"; // Asume que esta tabla tiene columnas con nombres numéricos.
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                for (int i = 1; i <= 9; i++) // Recorre las columnas del 1 al 9 (asume que hay hasta asiento_9).
+                                {
+                                    string asientoKey = $"asiento_{i}"; // Nombre del rectángulo en el XAML.
+                                    int estado = reader.GetInt32(i); // Obtiene el valor de la columna numérica.
+
+                                    // Busca el rectángulo en el XAML.
+                                    Rectangle rect = (Rectangle)this.FindName(asientoKey);
+                                    if (rect != null)
+                                    {
+                                        // Cambia el color según el estado (1 = ocupado, 0 = libre).
+                                        rect.Fill = estado == 1 ? Brushes.Red : Brushes.Green;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar los estados de los asientos: " + ex.Message);
+            }
+        }
+        private void reserveButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (asientosSeleccionados.Count == 0)
+            {
+                MessageBox.Show("Por favor, selecciona al menos un asiento para reservar.");
+                return;
+            }
+
+            string asientos = string.Join(", ", asientosSeleccionados);
+            MessageBox.Show($"Asientos reservados: {asientos}");
+            CargarEstadosAsientos();
+        }
+        private HashSet<int> asientosSeleccionados = new HashSet<int>();
+
+        private void Asiento_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (sender is Rectangle rect)
+            {
+                // Obtiene el nombre del asiento (asiento_1, asiento_2, etc.).
+                string asientoKey = rect.Name.Replace("asiento_", "");
+
+                if (int.TryParse(asientoKey, out int numeroAsiento))
+                {
+                    if (rect.Fill == Brushes.Red)
+                    {
+
+                        
+                    }
+                    else if (rect.Fill == Brushes.Yellow)
+                    {
+                        rect.Fill = Brushes.Green; // Color original.
+                        asientosSeleccionados.Remove(numeroAsiento); // Eliminar de seleccionados.
+                    }
+                    else
+                    {
+                        rect.Fill = Brushes.Yellow; // Color de selección.
+                        asientosSeleccionados.Add(numeroAsiento); // Añadir a seleccionados.
+                    }
+                }
+            }
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Transactions;
 using System.Windows;
 using AppCine;
 using AppCine.dto;
@@ -42,69 +43,90 @@ namespace SideBar_Nav.Pages
         private void LoadFileButton_Click(object sender, RoutedEventArgs e)
         {
             string filePath = FilePathTextBox.Text;
+            int Veces = 0;
 
             if (File.Exists(filePath))
             {
                 StringBuilder movieData = new StringBuilder();
 
-                // Limpiar la lista de películas antes de agregar las nuevas
-                movieData.Clear();
-
                 // Leer el archivo línea por línea
                 foreach (var line in File.ReadLines(filePath))
                 {
-                    string[] parts = line.Split(';');
-
-                    for (int i = 0; i < parts.Length; i++)
-                    {
-                        parts[i] = parts[i].Trim();
-                    }
-
-                    string titulo = parts[0];
-                    int sala = int.Parse(parts[1]);
-                    string idioma = parts[2];
-                    DateTime data_inici = DateTime.ParseExact(parts[3], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    DateTime data_fi = DateTime.ParseExact(parts[4], "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                    TimeSpan hora_inici = TimeSpan.ParseExact(parts[5], "hh\\:mm", CultureInfo.InvariantCulture);
-                    int duracion = int.Parse(parts[6]);
-
-                    List<string> generos = new List<string>();
-                    for (int i = 7; i < parts.Length; i++)
-                    {
-                        if (!string.IsNullOrEmpty(parts[i]))
-                        {
-                            generos.Add(parts[i]);
-                        }
-                    }
-                    
-                    string generos_string = string.Join(",", generos);
-
-                    string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine;";
-
                     try
                     {
-                        using (MySqlConnection connection = new MySqlConnection(connectionString))
-                        {
-                            string query = "INSERT INTO pelicula (titulo, numero_sala, idioma, data_inici, data_fi, hora_inici, duracion, generos) " +
-                                   "VALUES (@titulo, @numero_sala, @idioma, @data_inici, @data_fi, @hora_inici, @duracion, @generos)";
-                            connection.Open();
-                            using (MySqlCommand command = new MySqlCommand(query, connection))
-                            {
-                                // Parámetros de la consulta
-                                command.Parameters.AddWithValue("@titulo", titulo);
-                                command.Parameters.AddWithValue("@numero_sala", sala);
-                                command.Parameters.AddWithValue("@idioma", idioma);
-                                command.Parameters.AddWithValue("@data_inici", data_inici);
-                                command.Parameters.AddWithValue("@data_fi", data_fi);
-                                command.Parameters.AddWithValue("@hora_inici", hora_inici); 
-                                command.Parameters.AddWithValue("@duracion", duracion);
-                                command.Parameters.AddWithValue("@generos", generos_string);
+                        string[] parts = line.Split(';');
 
-                                // Ejecución
-                                command.ExecuteNonQuery();
+                        // Validar y limpiar datos
+                        for (int i = 0; i < parts.Length; i++)
+                        {
+                            parts[i] = parts[i].Trim();
+                        }
+
+                        string titulo = parts[0];
+                        int sala = int.Parse(parts[1]);
+                        string idioma = parts[2];
+                        DateTime data_inici = DateTime.ParseExact(parts[3], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        DateTime data_fi = DateTime.ParseExact(parts[4], "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        TimeSpan hora_inici = TimeSpan.ParseExact(parts[5], "hh\\:mm", CultureInfo.InvariantCulture);
+                        int duracion = int.Parse(parts[6]);
+
+                        List<string> generos = new List<string>();
+                        for (int i = 7; i < parts.Length; i++)
+                        {
+                            if (!string.IsNullOrEmpty(parts[i]))
+                            {
+                                generos.Add(parts[i]);
                             }
                         }
 
+                        string generos_string = string.Join(",", generos);
+
+                        string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine;";
+
+                        string query = "INSERT INTO pelicula (titulo, numero_sala, idioma, data_inici, data_fi, hora_inici, duracion, generos) " +
+                                       "VALUES (@titulo, @numero_sala, @idioma, @data_inici, @data_fi, @hora_inici, @duracion, @generos)";
+
+                        string query2 = "INSERT INTO asientos (id) VALUES (LAST_INSERT_ID());";
+
+                        using (MySqlConnection connection = new MySqlConnection(connectionString))
+                        {
+                            connection.Open();
+
+                            using (MySqlTransaction transaction = connection.BeginTransaction())
+                            {
+                                try
+                                {
+                                    using (MySqlCommand command = new MySqlCommand(query, connection, transaction))
+                                    {
+                                        command.Parameters.AddWithValue("@titulo", titulo);
+                                        command.Parameters.AddWithValue("@numero_sala", sala);
+                                        command.Parameters.AddWithValue("@idioma", idioma);
+                                        command.Parameters.AddWithValue("@data_inici", data_inici);
+                                        command.Parameters.AddWithValue("@data_fi", data_fi);
+                                        command.Parameters.AddWithValue("@hora_inici", hora_inici);
+                                        command.Parameters.AddWithValue("@duracion", duracion);
+                                        command.Parameters.AddWithValue("@generos", generos_string);
+                                        command.ExecuteNonQuery();
+                                    }
+
+                                    using (MySqlCommand command2 = new MySqlCommand(query2, connection, transaction))
+                                    {
+                                        command2.ExecuteNonQuery();
+                                    }
+
+                                    transaction.Commit();
+
+                                    Veces++;
+                                }
+                                catch
+                                {
+                                    transaction.Rollback();
+                                    throw;
+                                }
+                            }
+                        }
+
+                        // Agregar información de la película al StringBuilder
                         movieData.AppendLine($"Título: {titulo}");
                         movieData.AppendLine($"Sala: {sala}");
                         movieData.AppendLine($"Idioma: {idioma}");
@@ -114,40 +136,29 @@ namespace SideBar_Nav.Pages
                         movieData.AppendLine($"Duración: {duracion} minutos");
                         movieData.AppendLine($"Géneros: {generos_string}");
                         movieData.AppendLine(new string('-', 20));
-
-                        MessageBox.Show("Película añadida correctamente.");
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Error al añadir la película: " + ex.Message);
                     }
-            }
-
-                //Pelicula movie = new Pelicula(titulo, sala, idioma, data_inici, data_fi, hora_inici, duracion, generos);
-                //Peliculas.Add(movie);
-
-                // Mostrar los datos en un MessageBox para verificación
-                /*foreach (var movie in Peliculas)
+                }
+                if (Veces >= 6) { MessageBox.Show($"Películas añadidas correctamente."); }
+                else if (Veces == 1)
                 {
-                    movieData.AppendLine($"Título: {movie.titulo}");
-                    movieData.AppendLine($"Sala: {movie.Sala}");
-                    movieData.AppendLine($"Idioma: {movie.Idioma}");
-                    movieData.AppendLine($"Fecha Inicio: {movie.Data_inici.ToShortDateString()}");
-                    movieData.AppendLine($"Fecha Fin: {movie.Data_fi.ToShortDateString()}");
-                    movieData.AppendLine($"Hora de Inicio: {movie.Hora_inici}");
-                    movieData.AppendLine($"Duración: {movie.Duracion} minutos");
-                    movieData.AppendLine($"Géneros: {movie.GenerosString}");
-                    movieData.AppendLine(new string('-', 20));
-                }*/
-
-                // Mostrar el MessageBox con los datos
-                MessageBox.Show(movieData.ToString(), "Datos Cargados");
+                    MessageBox.Show(movieData.ToString(), "Datos Cargados");
+                    MessageBox.Show($"Película añadida correctamente.");
+                }else
+                {
+                    MessageBox.Show(movieData.ToString(), "Datos Cargados");
+                    MessageBox.Show($"Películas añadidas correctamente.");
+                }
             }
             else
             {
                 MessageBox.Show("El archivo no se encuentra en la ruta especificada.");
             }
         }
+
 
     }
 }

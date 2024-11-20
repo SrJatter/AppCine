@@ -40,16 +40,16 @@
         <Label Foreground="{DynamicResource Text}" Content="Filtrar Por:" HorizontalAlignment="Left" Margin="23,22,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="subFilterBox" HorizontalAlignment="Left" Margin="300,24,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="subFilterBox_SelectionChanged"/>
         <Rectangle HorizontalAlignment="Left" Height="222" Margin="625,67,0,0" Stroke="DarkGray" VerticalAlignment="Top" Width="222"/>
-        <Button x:Name="reserveButton" Content="Reservar" HorizontalAlignment="Left" Margin="712,294,0,0" VerticalAlignment="Top"/>
-        <Rectangle HorizontalAlignment="Left" Height="49" Margin="636,78,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49"/>
-        <Rectangle HorizontalAlignment="Left" Height="49" Margin="712,78,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="48"/>
-        <Rectangle HorizontalAlignment="Left" Height="48" Margin="636,154,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49"/>
-        <Rectangle HorizontalAlignment="Left" Height="49" Margin="784,78,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49"/>
-        <Rectangle HorizontalAlignment="Left" Height="49" Margin="783,230,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="50"/>
-        <Rectangle HorizontalAlignment="Left" Height="49" Margin="712,152,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49"/>
-        <Rectangle HorizontalAlignment="Left" Height="49" Margin="711,230,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.837,1.621"/>
-        <Rectangle HorizontalAlignment="Left" Height="49" Margin="636,230,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49"/>
-        <Rectangle HorizontalAlignment="Left" Height="49" Margin="784,152,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49"/>
+        <Button x:Name="reserveButton" Content="Reservar" HorizontalAlignment="Left" Margin="712,294,0,0" VerticalAlignment="Top" Click="reserveButton_Click"/>
+        <Rectangle Name="asiento_1" HorizontalAlignment="Left" Height="49" Margin="636,78,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49" MouseDown="Asiento_MouseDown"/>
+        <Rectangle Name="asiento_2" HorizontalAlignment="Left" Height="49" Margin="712,78,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="48" MouseDown="Asiento_MouseDown"/>
+        <Rectangle Name="asiento_3" HorizontalAlignment="Left" Height="48" Margin="636,154,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49" MouseDown="Asiento_MouseDown"/>
+        <Rectangle Name="asiento_4" HorizontalAlignment="Left" Height="49" Margin="784,78,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49" MouseDown="Asiento_MouseDown"/>
+        <Rectangle Name="asiento_5" HorizontalAlignment="Left" Height="49" Margin="783,230,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="50" MouseDown="Asiento_MouseDown"/>
+        <Rectangle Name="asiento_6" HorizontalAlignment="Left" Height="49" Margin="712,152,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49" MouseDown="Asiento_MouseDown"/>
+        <Rectangle Name="asiento_7" HorizontalAlignment="Left" Height="49" Margin="711,230,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.837,1.621" MouseDown="Asiento_MouseDown"/>
+        <Rectangle Name="asiento_8" HorizontalAlignment="Left" Height="49" Margin="636,230,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49" MouseDown="Asiento_MouseDown"/>
+        <Rectangle Name="asiento_9" HorizontalAlignment="Left" Height="49" Margin="784,152,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49" MouseDown="Asiento_MouseDown"/>
         <DatePicker x:Name="dataPicker" HorizontalAlignment="Left" Margin="300,22,0,0" VerticalAlignment="Top" SelectedDateChanged="dataPicker_SelectedDateChanged"/>
     </Grid>
 </Page>

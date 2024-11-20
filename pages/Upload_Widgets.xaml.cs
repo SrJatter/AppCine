@@ -89,31 +89,50 @@ namespace SideBar_Nav.Pages
                 {
                     string query = "INSERT INTO pelicula (titulo, numero_sala, idioma, data_inici, data_fi, hora_inici, duracion, generos) " +
                            "VALUES (@titulo, @numero_sala, @idioma, @data_inici, @data_fi, @hora_inici, @duracion, @generos)";
-                    connection.Open();
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
-                    {
-                        // Parámetros de la consulta
-                        command.Parameters.AddWithValue("@titulo", titulo);
-                        command.Parameters.AddWithValue("@numero_sala", sala);
-                        command.Parameters.AddWithValue("@idioma", idioma);
-                        command.Parameters.AddWithValue("@data_inici", fechaInicio.Value);
-                        command.Parameters.AddWithValue("@data_fi", fechaFin.Value);
-                        command.Parameters.AddWithValue("@hora_inici", "00:00"); // Hora fija por defecto
-                        command.Parameters.AddWithValue("@duracion", duracion);
-                        command.Parameters.AddWithValue("@generos", generos_string); // Aquí podrías añadir géneros reales si tienes un campo para eso
 
-                        // Ejecución
-                        command.ExecuteNonQuery();
+                    string query2 = "INSERT INTO asientos (id) VALUES (LAST_INSERT_ID());";
+
+                    connection.Open();
+                    using (MySqlTransaction transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            using (MySqlCommand command = new MySqlCommand(query, connection))
+                            {
+                                // Parámetros de la consulta
+                                command.Parameters.AddWithValue("@titulo", titulo);
+                                command.Parameters.AddWithValue("@numero_sala", sala);
+                                command.Parameters.AddWithValue("@idioma", idioma);
+                                command.Parameters.AddWithValue("@data_inici", fechaInicio.Value);
+                                command.Parameters.AddWithValue("@data_fi", fechaFin.Value);
+                                command.Parameters.AddWithValue("@hora_inici", "00:00"); // Hora fija por defecto
+                                command.Parameters.AddWithValue("@duracion", duracion);
+                                command.Parameters.AddWithValue("@generos", generos_string); // Aquí podrías añadir géneros reales si tienes un campo para eso
+
+                                // Ejecución
+                                command.ExecuteNonQuery();
+                            }
+                            using (MySqlCommand command2 = new MySqlCommand(query2, connection, transaction))
+                            {
+                                command2.ExecuteNonQuery();
+                            }
+
+                            transaction.Commit();
+                        }
+                        catch
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
                     }
                 }
-
-                MessageBox.Show("Película añadida correctamente.");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al añadir la película: " + ex.Message);
             }
-        MessageBox.Show(mensaje, "Datos Subidos", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Película añadida correctamente.");
+            MessageBox.Show(mensaje, "Datos Subidos", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         // Validar entrada para horas (00-23)
         private void ValidateHourInput(object sender, TextCompositionEventArgs e)
