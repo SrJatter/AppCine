@@ -5,16 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SideBar_Nav.Pages"
         xmlns:conv="clr-namespace:AppCine.Converters"
+        xmlns:dto="clr-namespace:AppCine.dto"
         mc:Ignorable="d"
         Title="AppCine" Height="450" Width="880">
 
+    <Page.DataContext>
+        <dto:TaquillaViewModel />
+    </Page.DataContext>
+    
     <Page.Resources>
         <conv:DateFormatterConverter x:Key="DateFormatterConverter" />
         <conv:TimeFormatterConverter x:Key="TimeFormatterConverter" />
+        <conv:BooleanToBrushConverter x:Key="BooleanToBrushConverter" />
     </Page.Resources>
 
     <Grid x:Name="Peliculas" Background="{DynamicResource Backdrop_Page}">
-        <ListView Background="{DynamicResource Backdrop_Mineu}" Foreground="{DynamicResource Text_List}" x:Name="list_peliculas" HorizontalAlignment="Left" Height="300" VerticalAlignment="Center" Width="570" Margin="23,0,0,0">
+        <ListView Background="{DynamicResource Backdrop_Mineu}" Foreground="{DynamicResource Text_List}" x:Name="list_peliculas" HorizontalAlignment="Left" Height="300" VerticalAlignment="Center" Width="570" Margin="23,0,0,0" SelectionChanged="list_peliculas_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Titulo" Width="Auto" DisplayMemberBinding="{Binding titulo}" />
@@ -40,16 +46,27 @@
         <Label Foreground="{DynamicResource Text}" Content="Filtrar Por:" HorizontalAlignment="Left" Margin="23,22,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="subFilterBox" HorizontalAlignment="Left" Margin="300,24,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="subFilterBox_SelectionChanged"/>
         <Rectangle HorizontalAlignment="Left" Height="222" Margin="625,67,0,0" Stroke="DarkGray" VerticalAlignment="Top" Width="222"/>
+        <ItemsControl ItemsSource="{Binding Asientos}" Margin="625,67,33,161">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!-- WrapPanel para ordenar los asientos -->
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!-- Representación visual del asiento -->
+                    <Rectangle Width="50" Height="50" Margin="12" Stroke="{DynamicResource Backdrop_Chairs}" StrokeThickness="2"
+                       Fill="{Binding IsSelected, Converter={StaticResource BooleanToBrushConverter}}"
+                       MouseDown="Rectangle_MouseDown">
+                        <Rectangle.ToolTip>
+                            <TextBlock Text="{Binding Id}" />
+                        </Rectangle.ToolTip>
+                    </Rectangle>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <Button x:Name="reserveButton" Content="Reservar" HorizontalAlignment="Left" Margin="712,294,0,0" VerticalAlignment="Top" Click="reserveButton_Click"/>
-        <Rectangle Name="asiento_1" HorizontalAlignment="Left" Height="49" Margin="636,78,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49" MouseDown="Asiento_MouseDown"/>
-        <Rectangle Name="asiento_2" HorizontalAlignment="Left" Height="49" Margin="712,78,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="48" MouseDown="Asiento_MouseDown"/>
-        <Rectangle Name="asiento_3" HorizontalAlignment="Left" Height="48" Margin="636,154,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49" MouseDown="Asiento_MouseDown"/>
-        <Rectangle Name="asiento_4" HorizontalAlignment="Left" Height="49" Margin="784,78,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49" MouseDown="Asiento_MouseDown"/>
-        <Rectangle Name="asiento_5" HorizontalAlignment="Left" Height="49" Margin="783,230,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="50" MouseDown="Asiento_MouseDown"/>
-        <Rectangle Name="asiento_6" HorizontalAlignment="Left" Height="49" Margin="712,152,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49" MouseDown="Asiento_MouseDown"/>
-        <Rectangle Name="asiento_7" HorizontalAlignment="Left" Height="49" Margin="711,230,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="50" RenderTransformOrigin="0.837,1.621" MouseDown="Asiento_MouseDown"/>
-        <Rectangle Name="asiento_8" HorizontalAlignment="Left" Height="49" Margin="636,230,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49" MouseDown="Asiento_MouseDown"/>
-        <Rectangle Name="asiento_9" HorizontalAlignment="Left" Height="49" Margin="784,152,0,0" Stroke="{DynamicResource Backdrop_Chairs}" VerticalAlignment="Top" Width="49" MouseDown="Asiento_MouseDown"/>
         <DatePicker x:Name="dataPicker" HorizontalAlignment="Left" Margin="300,22,0,0" VerticalAlignment="Top" SelectedDateChanged="dataPicker_SelectedDateChanged"/>
     </Grid>
 </Page>

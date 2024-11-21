@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using AppCine;
@@ -191,6 +193,17 @@ namespace SideBar_Nav.Pages
 
         private void CargarEstadosAsientos()
         {
+            
+        }
+        private void list_peliculas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (list_peliculas.SelectedItem is Pelicula peliculaSeleccionada)
+            {
+                CargarAsientosPorPelicula(peliculaSeleccionada.Id); // Llama al método para cargar asientos
+            }
+        }
+        private void CargarAsientosPorPelicula(int peliculaId)
+        {
             string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine;";
 
             try
@@ -199,9 +212,10 @@ namespace SideBar_Nav.Pages
                 {
                     connection.Open();
 
-                    string query = "SELECT * FROM asientos"; // Asume que esta tabla tiene columnas con nombres numéricos.
+                    string query = "SELECT * FROM asientos WHERE id = @peliculaId"; // Asume que esta tabla tiene columnas con nombres numéricos.
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
+                        command.Parameters.AddWithValue("@peliculaId", peliculaId);
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -229,47 +243,66 @@ namespace SideBar_Nav.Pages
                 MessageBox.Show("Error al cargar los estados de los asientos: " + ex.Message);
             }
         }
+
         private void reserveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (asientosSeleccionados.Count == 0)
+            if (DataContext is TaquillaViewModel viewModel)
             {
-                MessageBox.Show("Por favor, selecciona al menos un asiento para reservar.");
-                return;
-            }
+                // Filtrar los asientos seleccionados
+                var asientosSeleccionados = viewModel.Asientos.Where(a => a.IsSelected).ToList();
 
-            string asientos = string.Join(", ", asientosSeleccionados);
-            MessageBox.Show($"Asientos reservados: {asientos}");
-            CargarEstadosAsientos();
-        }
-        private HashSet<int> asientosSeleccionados = new HashSet<int>();
-
-        private void Asiento_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            if (sender is Rectangle rect)
-            {
-                // Obtiene el nombre del asiento (asiento_1, asiento_2, etc.).
-                string asientoKey = rect.Name.Replace("asiento_", "");
-
-                if (int.TryParse(asientoKey, out int numeroAsiento))
+                if (asientosSeleccionados.Count == 0)
                 {
-                    if (rect.Fill == Brushes.Red)
-                    {
+                    MessageBox.Show("Por favor, selecciona al menos un asiento para reservar.");
+                    return;
+                }
 
-                        
-                    }
-                    else if (rect.Fill == Brushes.Yellow)
+                string asientos = string.Join(", ", asientosSeleccionados.Select(a => a.Id));
+                MessageBox.Show($"Asientos reservados: {asientos}");
+                foreach (var asiento in asientosSeleccionados)
+                {
+                    asiento.IsSelected = false; // Resetear la selección (simula reserva finalizada)
+                    GuardarReservaEnBaseDeDatos(asiento.Id);
+                }
+                CargarEstadosAsientos();
+            }
+        }
+
+        private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.DataContext is Asiento asiento)
+            {
+                asiento.IsSelected = !asiento.IsSelected;
+            }
+        }
+        private void GuardarReservaEnBaseDeDatos(int asientoId)
+        {
+            string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine;";
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string query = "UPDATE asientos SET @asientoId = 1 WHERE id = pelicula"; // Cambia el estado a "reservado"
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-                        rect.Fill = Brushes.Green; // Color original.
-                        asientosSeleccionados.Remove(numeroAsiento); // Eliminar de seleccionados.
-                    }
-                    else
-                    {
-                        rect.Fill = Brushes.Yellow; // Color de selección.
-                        asientosSeleccionados.Add(numeroAsiento); // Añadir a seleccionados.
+                        command.Parameters.AddWithValue("@asientoId", asientoId);
+                        command.ExecuteNonQuery();
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al guardar la reserva en la base de datos: " + ex.Message);
             }
         }
 
     }
 }
+
+
+
+
+        
