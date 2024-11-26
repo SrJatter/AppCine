@@ -18,29 +18,35 @@ USE `appcine`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `asiento`
+-- Table structure for table `asientos`
 --
 
-DROP TABLE IF EXISTS `asiento`;
+DROP TABLE IF EXISTS `asientos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `asiento` (
-  `nr_sala` int NOT NULL,
-  `fila` int NOT NULL,
-  `columna` int NOT NULL,
-  `ocupado` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`nr_sala`,`fila`,`columna`),
-  CONSTRAINT `asiento_ibfk_1` FOREIGN KEY (`nr_sala`) REFERENCES `sala` (`numero`)
+CREATE TABLE `asientos` (
+  `id` int NOT NULL,
+  `asiento_1` tinyint DEFAULT '0',
+  `asiento_2` tinyint DEFAULT '0',
+  `asiento_3` tinyint DEFAULT '0',
+  `asiento_4` tinyint DEFAULT '0',
+  `asiento_5` tinyint DEFAULT '0',
+  `asiento_6` tinyint DEFAULT '0',
+  `asiento_7` tinyint DEFAULT '0',
+  `asiento_8` tinyint DEFAULT '0',
+  `asiento_9` tinyint DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `asiento`
+-- Dumping data for table `asientos`
 --
 
-LOCK TABLES `asiento` WRITE;
-/*!40000 ALTER TABLE `asiento` DISABLE KEYS */;
-/*!40000 ALTER TABLE `asiento` ENABLE KEYS */;
+LOCK TABLES `asientos` WRITE;
+/*!40000 ALTER TABLE `asientos` DISABLE KEYS */;
+INSERT INTO `asientos` VALUES (1,0,0,0,0,0,0,0,0,0),(2,0,0,0,0,0,0,0,0,0),(64,0,0,1,0,0,0,1,0,0),(65,0,0,0,0,0,0,0,0,0),(66,1,1,1,1,1,1,1,1,1),(68,1,1,0,0,0,0,0,0,0);
+/*!40000 ALTER TABLE `asientos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -63,7 +69,7 @@ CREATE TABLE `pelicula` (
   PRIMARY KEY (`id`),
   KEY `numero_sala` (`numero_sala`),
   CONSTRAINT `pelicula_ibfk_1` FOREIGN KEY (`numero_sala`) REFERENCES `sala` (`numero`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +78,7 @@ CREATE TABLE `pelicula` (
 
 LOCK TABLES `pelicula` WRITE;
 /*!40000 ALTER TABLE `pelicula` DISABLE KEYS */;
-INSERT INTO `pelicula` VALUES (22,'Oppenheimer',1,'Ingles','2024-10-15','2024-12-15','19:00:00',180,'Drama,Documental,Fantasia'),(23,'Barbie',2,'Ingles','2024-10-10','2024-12-10','21:00:00',114,'Comedia,Fantasia'),(24,'Spider-Man: Across the Spider-Verse',3,'Castellano','2024-11-01','2024-12-01','18:30:00',140,'Musical,Aventura,Accio'),(25,'The Exorcist: Believer',1,'Ingles','2024-10-05','2024-12-05','22:00:00',111,'Terror,Suspense'),(26,'Killers of the Flower Moon',3,'Ingles','2024-10-20','2024-12-20','19:30:00',206,'Ciencia_Ficcio,Comedia');
+INSERT INTO `pelicula` VALUES (1,'Oppenheimer',1,'Ingles','2024-10-15','2024-12-15','19:00:00',180,'Drama,Documental,Fantasia'),(2,'Barbie',2,'Ingles','2024-10-10','2024-12-10','21:00:00',114,'Comedia,Fantasia'),(3,'Spider-Man: Across the Spider-Verse',3,'Castellano','2024-11-01','2024-12-01','18:30:00',140,'Musical,Aventura,Accio'),(4,'The Exorcist: Believer',1,'Ingles','2024-10-05','2024-12-05','22:00:00',111,'Terror,Suspense'),(5,'Killers of the Flower Moon',3,'Ingles','2024-10-20','2024-12-20','19:30:00',206,'Ciencia_Ficcio,Comedia'),(64,'Bee Movie',1,'Castellano','2024-11-01','2025-01-10','15:00:00',120,'Comedia,Aventura'),(65,'as',2,'Castellano','2024-11-15','2024-11-29','00:00:00',122,'Aventura'),(66,'Alicante',1,'Castellano','2024-11-25','2024-11-30','00:00:00',123,'Ciencia_Ficcio'),(68,'Sas',3,'Ingles','2024-11-14','2024-11-27','00:00:00',123,'Ciencia_Ficcio');
 /*!40000 ALTER TABLE `pelicula` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,4 +140,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-18 19:42:48
+-- Dump completed on 2024-11-26 11:56:50
