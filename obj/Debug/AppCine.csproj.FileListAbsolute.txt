@@ -168,3 +168,9 @@ C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\Upload_W
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\Upload_Widgets.g.cs
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\Upload_File.g.cs
 C:\Users\Admin\Desktop\Codigos\Pedro\Interfaces\AppCine\obj\Debug\pages\Upload_File.baml
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\Upload.baml
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\Upload_File.baml
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\Upload_Widgets.baml
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\Upload.g.cs
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\Upload_File.g.cs
+C:\Users\david\Documentos\DAM2\M7 Interficies\UF1\P1\app\obj\Debug\pages\Upload_Widgets.g.cs

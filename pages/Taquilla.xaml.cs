@@ -19,15 +19,8 @@ namespace SideBar_Nav.Pages
         bool first = true;
         bool subFilter = false;
         int peli = 0;
-        bool asiento_1 = false;
-        bool asiento_2 = false;
-        bool asiento_3 = false;
-        bool asiento_4 = false;
-        bool asiento_5 = false;
-        bool asiento_6 = false;
-        bool asiento_7 = false;
-        bool asiento_8 = false;
-        bool asiento_9 = false;
+        bool[] asientos = new bool[9] { false, false, false, false, false, false, false, false, false };
+
 
         public Taquilla()
         {
@@ -354,42 +347,12 @@ namespace SideBar_Nav.Pages
                                             IsSelected = false, // Por defecto, los asientos no están seleccionados.
                                             IsOcupado = estado == 1 // Si estado es 1, está ocupado
                                         };
-                                        switch (i) {
-                                            case 1:
-                                                asiento_1 = estado == 1;
-                                                break;
-                                            case 2:
-                                                asiento_2 = estado == 1;
-                                                break;
-                                            case 3:
-                                                asiento_3 = estado == 1;
-                                                break;
-                                            case 4:
-                                                asiento_4 = estado == 1;
-                                                break;
-                                            case 5:
-                                                asiento_5 = estado == 1;
-                                                break;
-                                            case 6:
-                                                asiento_6 = estado == 1;
-                                                break;
-                                            case 7:
-                                                asiento_7 = estado == 1;
-                                                break;
-                                            case 8:
-                                                asiento_8 = estado == 1;
-                                                break;
-                                            case 9:
-                                                asiento_9 = estado == 1;
-                                                break;
-                                        }
-                                        // Si está ocupado, ya lo configuramos en true.
-                                        // Se puede verificar aquí si es necesario hacer algo más con el estado.
-                                        Asientos.Add(asiento);
 
-                                        // Depuración
-                                        // Mostrar todos los estados de ocupación de los asientos
-                                        Console.WriteLine($"Asiento {i}: {(estado == 1 ? "Ocupado" : "Libre")}");
+                                        // Actualiza el color del asiento según el estado
+                                        UpdateAsientoColor(i, estado == 1);
+
+                                        // Añade el asiento a la colección
+                                        Asientos.Add(asiento);
                                     }
                                 }
                             }
@@ -402,6 +365,27 @@ namespace SideBar_Nav.Pages
                 MessageBox.Show("Error al cargar los estados de los asientos: " + ex.Message);
             }
         }
+
+        // Método para actualizar el color del asiento en la interfaz
+        private void UpdateAsientoColor(int asientoId, bool isOcupado)
+        {
+            // Busca el contenedor del asiento
+            var container = asientosControl.ItemContainerGenerator.ContainerFromIndex(asientoId - 1) as ContentPresenter;
+
+            if (container != null)
+            {
+                // Encuentra el rectángulo dentro del DataTemplate
+                var rectangle = container.ContentTemplate.FindName("RectangleName", container) as Rectangle;
+
+                if (rectangle != null)
+                {
+                    // Cambia el color según el estado
+                    rectangle.Fill = isOcupado ? Brushes.Red : Brushes.Green;
+                    asientos[asientoId-1] = isOcupado;
+                }
+            }
+        }
+
         private void reserveButton_Click(object sender, RoutedEventArgs e)
         {
             if (peli != 0)
@@ -437,126 +421,25 @@ namespace SideBar_Nav.Pages
 
             if (asiento != null)
             {
-                // Comprobar si el Id del asiento es 1
-                if (asiento.Id == 1)
-                {
-                    if (!asiento_1)
-                    {
-                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
-                    }
-                    else
-                    {
-                        MessageBox.Show("Esta butaca esta ocupada");
-                        rect.Fill = Brushes.Red;
+                // Verificar si el asiento está ocupado
+                bool isOcupado = asientos[asiento.Id - 1]; // Usamos asiento.Id - 1 para acceder correctamente al índice
 
-                    }
-                }
-                else if(asiento.Id == 2)
+                // Si el asiento está ocupado (rojo), no permitimos interacción
+                if (isOcupado)
                 {
-                    if (!asiento_2)
-                    {
-                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
-                    }
-                    else
-                    {
-                        MessageBox.Show("Esta butaca esta ocupada");
-                                                rect.Fill = Brushes.Red;
-
-                    }
+                    MessageBox.Show("Esta butaca está ocupada");
+                    rect.Fill = Brushes.Red; // Asegura que el color sea rojo
+                    return; // Detenemos la ejecución aquí
                 }
-                else if (asiento.Id == 3)
-                {
-                    if (!asiento_3)
-                    {
-                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
-                    }
-                    else
-                    {
-                        MessageBox.Show("Esta butaca esta ocupada");
-                                                rect.Fill = Brushes.Red;
 
-                    }
-                }
-                else if (asiento.Id == 4)
-                {
-                    if (!asiento_4)
-                    {
-                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
-                    }
-                    else
-                    {
-                        MessageBox.Show("Esta butaca esta ocupada");
-                                                rect.Fill = Brushes.Red;
+                // Si el asiento no está ocupado (verde o azul), alternamos la selección
+                asiento.IsSelected = !asiento.IsSelected;
 
-                    }
-                }
-                else if (asiento.Id == 5)
-                {
-                    if (!asiento_5)
-                    {
-                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
-                    }
-                    else
-                    {
-                        MessageBox.Show("Esta butaca esta ocupada");
-                                                rect.Fill = Brushes.Red;
-
-                    }
-                }
-                else if (asiento.Id == 6)
-                {
-                    if (!asiento_6)
-                    {
-                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
-                    }
-                    else
-                    {
-                        MessageBox.Show("Esta butaca esta ocupada");
-                                                rect.Fill = Brushes.Red;
-
-                    }
-                }
-                else if (asiento.Id == 7)
-                {
-                    if (!asiento_7)
-                    {
-                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
-                    }
-                    else
-                    {
-                        MessageBox.Show("Esta butaca esta ocupada");
-                                                rect.Fill = Brushes.Red;
-
-                    }
-                }
-                else if (asiento.Id == 8)
-                {
-                    if (!asiento_8)
-                    {
-                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
-                    }
-                    else
-                    {
-                        MessageBox.Show("Esta butaca esta ocupada");
-                                                rect.Fill = Brushes.Red;
-
-                    }
-                }
-                else if (asiento.Id == 9)
-                {
-                    if (!asiento_9)
-                    {
-                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
-                    }
-                    else
-                    {
-                        MessageBox.Show("Esta butaca esta ocupada");
-                                                rect.Fill = Brushes.Red;
-
-                    }
-                }
+                // Cambiar el color según el estado de selección
+                rect.Fill = asiento.IsSelected ? Brushes.Yellow : Brushes.Green; // Azul si está seleccionado, verde si no
             }
         }
+
 
 
 
