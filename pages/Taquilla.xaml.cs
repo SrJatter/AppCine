@@ -418,6 +418,7 @@ namespace SideBar_Nav.Pages
                     foreach (var asiento in asientosSeleccionados)
                     {
                         GuardarReservaEnBaseDeDatos(asiento.Id);
+                        asiento.IsSelected = false;
                     }
                     CargarAsientosPorPelicula(peli);
                 }

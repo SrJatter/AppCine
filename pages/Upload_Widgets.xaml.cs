@@ -38,6 +38,8 @@ namespace SideBar_Nav.Pages
             DateTime? fechaFin = FechaFinPicker.SelectedDate;
 
             string horaInicio = $"{HoraInicioTextBox_Hora.Text}:{HoraInicioTextBox_Minutos.Text}";
+            string hora = HoraInicioTextBox_Hora.Text;
+            string minuto = HoraInicioTextBox_Minutos.Text;
 
             string genero1 = (Genero1ComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
             string genero2 = (Genero2ComboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
@@ -54,8 +56,8 @@ namespace SideBar_Nav.Pages
             // Validar datos
             if (string.IsNullOrWhiteSpace(titulo) || string.IsNullOrWhiteSpace(sala) ||
                 string.IsNullOrWhiteSpace(idioma) || string.IsNullOrWhiteSpace(duracion) ||
-                fechaInicio == null || fechaFin == null || string.IsNullOrWhiteSpace(horaInicio) ||
-                generos == false)
+                fechaInicio == null || fechaFin == null || string.IsNullOrWhiteSpace(hora) ||
+                string.IsNullOrWhiteSpace(minuto) || generos == false)
             {
                 MessageBox.Show("Por favor, completa todos los campos obligatorios.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -105,9 +107,9 @@ namespace SideBar_Nav.Pages
                                 command.Parameters.AddWithValue("@idioma", idioma);
                                 command.Parameters.AddWithValue("@data_inici", fechaInicio.Value);
                                 command.Parameters.AddWithValue("@data_fi", fechaFin.Value);
-                                command.Parameters.AddWithValue("@hora_inici", "00:00"); // Hora fija por defecto
+                                command.Parameters.AddWithValue("@hora_inici", horaInicio);
                                 command.Parameters.AddWithValue("@duracion", duracion);
-                                command.Parameters.AddWithValue("@generos", generos_string); // Aquí podrías añadir géneros reales si tienes un campo para eso
+                                command.Parameters.AddWithValue("@generos", generos_string);
 
                                 // Ejecución
                                 command.ExecuteNonQuery();
