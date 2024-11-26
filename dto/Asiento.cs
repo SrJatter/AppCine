@@ -6,6 +6,8 @@ namespace AppCine.dto
     {
         private bool _isSelected;
 
+        private bool _isOcupado;
+
         public int Id { get; set; }
 
         public bool IsSelected
@@ -17,6 +19,20 @@ namespace AppCine.dto
                 {
                     _isSelected = value;
                     OnPropertyChanged(nameof(IsSelected));
+                }
+            }
+        }
+
+        // Indicador de si el asiento está ocupado
+        public bool IsOcupado
+        {
+            get => _isOcupado;
+            set
+            {
+                if (_isOcupado != value)
+                {
+                    _isOcupado = value;
+                    OnPropertyChanged(nameof(IsOcupado));
                 }
             }
         }

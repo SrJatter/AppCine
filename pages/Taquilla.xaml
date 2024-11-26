@@ -46,7 +46,7 @@
         <Label Foreground="{DynamicResource Text}" Content="Filtrar Por:" HorizontalAlignment="Left" Margin="23,22,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="subFilterBox" HorizontalAlignment="Left" Margin="300,24,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="subFilterBox_SelectionChanged"/>
         <Rectangle HorizontalAlignment="Left" Height="222" Margin="625,67,0,0" Stroke="DarkGray" VerticalAlignment="Top" Width="222"/>
-        <ItemsControl ItemsSource="{Binding Asientos}" Margin="625,67,33,161">
+        <ItemsControl x:Name="asientosControl" ItemsSource="{Binding Asientos}" Margin="625,67,33,161">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <!-- WrapPanel para ordenar los asientos -->
@@ -57,8 +57,8 @@
                 <DataTemplate>
                     <!-- Representación visual del asiento -->
                     <Rectangle Width="50" Height="50" Margin="12" Stroke="{DynamicResource Backdrop_Chairs}" StrokeThickness="2"
-                       Fill="{Binding IsSelected, Converter={StaticResource BooleanToBrushConverter}}"
-                       MouseDown="Rectangle_MouseDown">
+                               Fill="{Binding IsSelected, Converter={StaticResource BooleanToBrushConverter}}"
+                               MouseDown="Rectangle_MouseDown">
                         <Rectangle.ToolTip>
                             <TextBlock Text="{Binding Id}" />
                         </Rectangle.ToolTip>
@@ -68,5 +68,6 @@
         </ItemsControl>
         <Button x:Name="reserveButton" Content="Reservar" HorizontalAlignment="Left" Margin="712,294,0,0" VerticalAlignment="Top" Click="reserveButton_Click"/>
         <DatePicker x:Name="dataPicker" HorizontalAlignment="Left" Margin="300,22,0,0" VerticalAlignment="Top" SelectedDateChanged="dataPicker_SelectedDateChanged"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="625,375,0,0" VerticalAlignment="Top" Click="prueba"/>
     </Grid>
 </Page>

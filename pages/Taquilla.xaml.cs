@@ -19,6 +19,15 @@ namespace SideBar_Nav.Pages
         bool first = true;
         bool subFilter = false;
         int peli = 0;
+        bool asiento_1 = false;
+        bool asiento_2 = false;
+        bool asiento_3 = false;
+        bool asiento_4 = false;
+        bool asiento_5 = false;
+        bool asiento_6 = false;
+        bool asiento_7 = false;
+        bool asiento_8 = false;
+        bool asiento_9 = false;
 
         public Taquilla()
         {
@@ -194,7 +203,112 @@ namespace SideBar_Nav.Pages
 
         private void CargarEstadosAsientos()
         {
-            
+            /*var rect = Rectangle;
+            var asiento = rect?.DataContext as Asiento; // Obtener el DataContext, que es el Asiento
+
+            if (asiento != null)
+            {
+                // Comprobar si el Id del asiento es 1
+                if (asiento.Id == 1)
+                {
+                    if (!asiento_1)
+                    {
+                        rect.Fill = Brushes.Green;
+                    }
+                    else
+                    {
+                        rect.Fill = Brushes.Red;
+                    }
+                }
+                else if (asiento.Id == 2)
+                {
+                    if (!asiento_2)
+                    {
+                        rect.Fill = Brushes.Green;
+                    }
+                    else
+                    {
+                       rect.Fill = Brushes.Red;
+                    }
+                }
+                else if (asiento.Id == 3)
+                {
+                    if (!asiento_3)
+                    {
+                        rect.Fill = Brushes.Green;
+                    }
+                    else
+                    {
+                       rect.Fill = Brushes.Red;
+                    }
+                }
+                else if (asiento.Id == 4)
+                {
+                    if (!asiento_4)
+                    {
+                        rect.Fill = Brushes.Green;
+                    }
+                    else
+                    {
+                       rect.Fill = Brushes.Red;
+                    }
+                }
+                else if (asiento.Id == 5)
+                {
+                    if (!asiento_5)
+                    {
+                        rect.Fill = Brushes.Green;
+                    }
+                    else
+                    {
+                       rect.Fill = Brushes.Red;
+                    }
+                }
+                else if (asiento.Id == 6)
+                {
+                    if (!asiento_6)
+                    {
+                        rect.Fill = Brushes.Green;
+                    }
+                    else
+                    {
+                       rect.Fill = Brushes.Red;
+                    }
+                }
+                else if (asiento.Id == 7)
+                {
+                    if (!asiento_7)
+                    {
+                        rect.Fill = Brushes.Green;
+                    }
+                    else
+                    {
+                       rect.Fill = Brushes.Red;
+                    }
+                }
+                else if (asiento.Id == 8)
+                {
+                    if (!asiento_8)
+                    {
+                        rect.Fill = Brushes.Green;
+                    }
+                    else
+                    {
+                       rect.Fill = Brushes.Red;
+                    }
+                }
+                else if (asiento.Id == 9)
+                {
+                    if (!asiento_9)
+                    {
+                        rect.Fill = Brushes.Green;
+                    }
+                    else
+                    {
+                       rect.Fill = Brushes.Red;
+                    }
+                }
+            }*/
         }
         private void list_peliculas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -225,16 +339,58 @@ namespace SideBar_Nav.Pages
                             // Limpia la colección antes de llenarla.
                             Asientos.Clear();
 
-                            if (reader.Read())
+                            while (reader.Read())
                             {
-                                for (int i = 1; i <= 9; i++) // Ajusta según el número de columnas `asiento_x`.
+                                for (int i = 1; i <= 9; i++) // Ajusta el rango si tienes más columnas.
                                 {
-                                    int estado = reader.GetInt32(i); // Obtén el estado (1 = ocupado, 0 = libre).
-                                    Asientos.Add(new Asiento
+                                    string columnName = $"asiento_{i}";
+
+                                    if (!reader.IsDBNull(reader.GetOrdinal(columnName)))
                                     {
-                                        Id = i,
-                                        IsSelected = false       // Por defecto, ningún asiento está seleccionado.
-                                    });
+                                        int estado = reader.GetInt32(reader.GetOrdinal(columnName));
+                                        Asiento asiento = new Asiento
+                                        {
+                                            Id = i,
+                                            IsSelected = false, // Por defecto, los asientos no están seleccionados.
+                                            IsOcupado = estado == 1 // Si estado es 1, está ocupado
+                                        };
+                                        switch (i) {
+                                            case 1:
+                                                asiento_1 = estado == 1;
+                                                break;
+                                            case 2:
+                                                asiento_2 = estado == 1;
+                                                break;
+                                            case 3:
+                                                asiento_3 = estado == 1;
+                                                break;
+                                            case 4:
+                                                asiento_4 = estado == 1;
+                                                break;
+                                            case 5:
+                                                asiento_5 = estado == 1;
+                                                break;
+                                            case 6:
+                                                asiento_6 = estado == 1;
+                                                break;
+                                            case 7:
+                                                asiento_7 = estado == 1;
+                                                break;
+                                            case 8:
+                                                asiento_8 = estado == 1;
+                                                break;
+                                            case 9:
+                                                asiento_9 = estado == 1;
+                                                break;
+                                        }
+                                        // Si está ocupado, ya lo configuramos en true.
+                                        // Se puede verificar aquí si es necesario hacer algo más con el estado.
+                                        Asientos.Add(asiento);
+
+                                        // Depuración
+                                        // Mostrar todos los estados de ocupación de los asientos
+                                        Console.WriteLine($"Asiento {i}: {(estado == 1 ? "Ocupado" : "Libre")}");
+                                    }
                                 }
                             }
                         }
@@ -246,7 +402,6 @@ namespace SideBar_Nav.Pages
                 MessageBox.Show("Error al cargar los estados de los asientos: " + ex.Message);
             }
         }
-
         private void reserveButton_Click(object sender, RoutedEventArgs e)
         {
             if (peli != 0)
@@ -266,24 +421,145 @@ namespace SideBar_Nav.Pages
                     MessageBox.Show($"Asientos reservados: {asientos}");
                     foreach (var asiento in asientosSeleccionados)
                     {
-                        asiento.IsSelected = false; // Resetear la selección (simula reserva finalizada)
                         GuardarReservaEnBaseDeDatos(asiento.Id);
                     }
-                    CargarEstadosAsientos();
+                    CargarAsientosPorPelicula(peli);
                 }
             } else {
                 MessageBox.Show("Por favor, selecciona al menos una pelicula para reservar.");
                 return;
             }
         }
-
         private void Rectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is FrameworkElement element && element.DataContext is Asiento asiento)
+            var rect = sender as Rectangle;
+            var asiento = rect?.DataContext as Asiento; // Obtener el DataContext, que es el Asiento
+
+            if (asiento != null)
             {
-                asiento.IsSelected = !asiento.IsSelected;
+                // Comprobar si el Id del asiento es 1
+                if (asiento.Id == 1)
+                {
+                    if (!asiento_1)
+                    {
+                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
+                    }
+                    else
+                    {
+                        MessageBox.Show("Esta butaca esta ocupada");
+                        rect.Fill = Brushes.Red;
+
+                    }
+                }
+                else if(asiento.Id == 2)
+                {
+                    if (!asiento_2)
+                    {
+                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
+                    }
+                    else
+                    {
+                        MessageBox.Show("Esta butaca esta ocupada");
+                                                rect.Fill = Brushes.Red;
+
+                    }
+                }
+                else if (asiento.Id == 3)
+                {
+                    if (!asiento_3)
+                    {
+                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
+                    }
+                    else
+                    {
+                        MessageBox.Show("Esta butaca esta ocupada");
+                                                rect.Fill = Brushes.Red;
+
+                    }
+                }
+                else if (asiento.Id == 4)
+                {
+                    if (!asiento_4)
+                    {
+                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
+                    }
+                    else
+                    {
+                        MessageBox.Show("Esta butaca esta ocupada");
+                                                rect.Fill = Brushes.Red;
+
+                    }
+                }
+                else if (asiento.Id == 5)
+                {
+                    if (!asiento_5)
+                    {
+                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
+                    }
+                    else
+                    {
+                        MessageBox.Show("Esta butaca esta ocupada");
+                                                rect.Fill = Brushes.Red;
+
+                    }
+                }
+                else if (asiento.Id == 6)
+                {
+                    if (!asiento_6)
+                    {
+                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
+                    }
+                    else
+                    {
+                        MessageBox.Show("Esta butaca esta ocupada");
+                                                rect.Fill = Brushes.Red;
+
+                    }
+                }
+                else if (asiento.Id == 7)
+                {
+                    if (!asiento_7)
+                    {
+                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
+                    }
+                    else
+                    {
+                        MessageBox.Show("Esta butaca esta ocupada");
+                                                rect.Fill = Brushes.Red;
+
+                    }
+                }
+                else if (asiento.Id == 8)
+                {
+                    if (!asiento_8)
+                    {
+                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
+                    }
+                    else
+                    {
+                        MessageBox.Show("Esta butaca esta ocupada");
+                                                rect.Fill = Brushes.Red;
+
+                    }
+                }
+                else if (asiento.Id == 9)
+                {
+                    if (!asiento_9)
+                    {
+                        asiento.IsSelected = !asiento.IsSelected; // Alternar selección si no está ocupado
+                    }
+                    else
+                    {
+                        MessageBox.Show("Esta butaca esta ocupada");
+                                                rect.Fill = Brushes.Red;
+
+                    }
+                }
             }
         }
+
+
+
         private void GuardarReservaEnBaseDeDatos(int asientoId)
         {
             string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine;";
@@ -308,6 +584,15 @@ namespace SideBar_Nav.Pages
             catch (Exception ex)
             {
                 MessageBox.Show("Error al guardar la reserva en la base de datos: " + ex.Message);
+            }
+        }
+
+        private void prueba(object sender, RoutedEventArgs e)
+        {
+            foreach (var asiento in Asientos)
+            {
+                Console.WriteLine($"--------------------------------------------------------------------");
+                Console.WriteLine($"Asiento {asiento.Id}: {(asiento.IsOcupado ? "Ocupado" : "Libre")}");
             }
         }
     }
