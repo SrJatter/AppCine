@@ -18,6 +18,7 @@ namespace SideBar_Nav.Pages
         private List<Pelicula> peliculas;
         bool first = true;
         bool subFilter = false;
+        int peli = 0;
 
         public Taquilla()
         {
@@ -71,7 +72,7 @@ namespace SideBar_Nav.Pages
                                 Sala sala = new Sala(salaId);
                                 idiomas idiomaEnum = (idiomas)Enum.Parse(typeof(idiomas), idioma);
 
-                                Pelicula pelicula = new Pelicula(titulo, sala, idiomaEnum, fechaInicio, fechaFin, horaInicio, duracion, generosLista);
+                                Pelicula pelicula = new Pelicula(id, titulo, sala, idiomaEnum, fechaInicio, fechaFin, horaInicio, duracion, generosLista);
                                 peliculas.Add(pelicula);
                             }
                         }
@@ -200,8 +201,11 @@ namespace SideBar_Nav.Pages
             if (list_peliculas.SelectedItem is Pelicula peliculaSeleccionada)
             {
                 CargarAsientosPorPelicula(peliculaSeleccionada.Id); // Llama al método para cargar asientos
+                peli = peliculaSeleccionada.Id;
             }
         }
+        public ObservableCollection<Asiento> Asientos { get; set; } = new ObservableCollection<Asiento>();
+
         private void CargarAsientosPorPelicula(int peliculaId)
         {
             string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine;";
@@ -212,26 +216,25 @@ namespace SideBar_Nav.Pages
                 {
                     connection.Open();
 
-                    string query = "SELECT * FROM asientos WHERE id = @peliculaId"; // Asume que esta tabla tiene columnas con nombres numéricos.
+                    string query = "SELECT * FROM asientos WHERE id = @peliculaId";
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@peliculaId", peliculaId);
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            while (reader.Read())
-                            {
-                                for (int i = 1; i <= 9; i++) // Recorre las columnas del 1 al 9 (asume que hay hasta asiento_9).
-                                {
-                                    string asientoKey = $"asiento_{i}"; // Nombre del rectángulo en el XAML.
-                                    int estado = reader.GetInt32(i); // Obtiene el valor de la columna numérica.
+                            // Limpia la colección antes de llenarla.
+                            Asientos.Clear();
 
-                                    // Busca el rectángulo en el XAML.
-                                    Rectangle rect = (Rectangle)this.FindName(asientoKey);
-                                    if (rect != null)
+                            if (reader.Read())
+                            {
+                                for (int i = 1; i <= 9; i++) // Ajusta según el número de columnas `asiento_x`.
+                                {
+                                    int estado = reader.GetInt32(i); // Obtén el estado (1 = ocupado, 0 = libre).
+                                    Asientos.Add(new Asiento
                                     {
-                                        // Cambia el color según el estado (1 = ocupado, 0 = libre).
-                                        rect.Fill = estado == 1 ? Brushes.Red : Brushes.Green;
-                                    }
+                                        Id = i,
+                                        IsSelected = false       // Por defecto, ningún asiento está seleccionado.
+                                    });
                                 }
                             }
                         }
@@ -246,25 +249,31 @@ namespace SideBar_Nav.Pages
 
         private void reserveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DataContext is TaquillaViewModel viewModel)
+            if (peli != 0)
             {
-                // Filtrar los asientos seleccionados
-                var asientosSeleccionados = viewModel.Asientos.Where(a => a.IsSelected).ToList();
-
-                if (asientosSeleccionados.Count == 0)
+                if (DataContext is TaquillaViewModel viewModel)
                 {
-                    MessageBox.Show("Por favor, selecciona al menos un asiento para reservar.");
-                    return;
-                }
+                    // Filtrar los asientos seleccionados
+                    var asientosSeleccionados = viewModel.Asientos.Where(a => a.IsSelected).ToList();
 
-                string asientos = string.Join(", ", asientosSeleccionados.Select(a => a.Id));
-                MessageBox.Show($"Asientos reservados: {asientos}");
-                foreach (var asiento in asientosSeleccionados)
-                {
-                    asiento.IsSelected = false; // Resetear la selección (simula reserva finalizada)
-                    GuardarReservaEnBaseDeDatos(asiento.Id);
+                    if (asientosSeleccionados.Count == 0)
+                    {
+                        MessageBox.Show("Por favor, selecciona al menos un asiento para reservar.");
+                        return;
+                    }
+
+                    string asientos = string.Join(", ", asientosSeleccionados.Select(a => a.Id));
+                    MessageBox.Show($"Asientos reservados: {asientos}");
+                    foreach (var asiento in asientosSeleccionados)
+                    {
+                        asiento.IsSelected = false; // Resetear la selección (simula reserva finalizada)
+                        GuardarReservaEnBaseDeDatos(asiento.Id);
+                    }
+                    CargarEstadosAsientos();
                 }
-                CargarEstadosAsientos();
+            } else {
+                MessageBox.Show("Por favor, selecciona al menos una pelicula para reservar.");
+                return;
             }
         }
 
@@ -285,10 +294,13 @@ namespace SideBar_Nav.Pages
                 {
                     connection.Open();
 
-                    string query = "UPDATE asientos SET @asientoId = 1 WHERE id = pelicula"; // Cambia el estado a "reservado"
+                    string asiento = "asiento_" + asientoId;
+
+
+                    string query = $"UPDATE asientos SET {asiento} = 1 WHERE id = @pelicula;"; // Cambia el estado a "reservado"
                     using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@asientoId", asientoId);
+                        command.Parameters.AddWithValue("@pelicula", peli);
                         command.ExecuteNonQuery();
                     }
                 }
@@ -298,7 +310,6 @@ namespace SideBar_Nav.Pages
                 MessageBox.Show("Error al guardar la reserva en la base de datos: " + ex.Message);
             }
         }
-
     }
 }
 

@@ -46,7 +46,7 @@ namespace AppCine.Converters
         {
             if (value is bool isSelected)
             {
-                return isSelected ? Brushes.Red : Brushes.Green;
+                return isSelected ? Brushes.Yellow : Brushes.Green;
             }
             return Brushes.Green;
         }
