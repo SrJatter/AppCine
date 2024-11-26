@@ -8,7 +8,11 @@
     <SolidColorBrush Color="AliceBlue" x:Key="Text_Popup"/>
     <SolidColorBrush Color="#bfff00" x:Key="HyperLink_Text"/>
     <SolidColorBrush Color="#f8f8ff" x:Key="Backdrop_Chairs"/>
-    <SolidColorBrush Color="#cf1020" x:Key="Text_List"/>
-
+    <SolidColorBrush Color="#FFFFFF" x:Key="Text_List"/>
+    <SolidColorBrush Color="#4682b4" x:Key="SelectionBackground"/>
+    <SolidColorBrush Color="#4682b4" x:Key="SelectionBackgroundTitle"/>
+    <SolidColorBrush Color="#6d6e6e" x:Key="BackgroundTitle"/>
+    
+    
 
 </ResourceDictionary>

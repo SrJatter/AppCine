@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using AppCine;
 using AppCine.dto;
@@ -305,10 +306,21 @@ namespace SideBar_Nav.Pages
         }
         private void list_peliculas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Verifica si hay un elemento seleccionado
             if (list_peliculas.SelectedItem is Pelicula peliculaSeleccionada)
             {
+                // Si se selecciona una película, mostrar el menú
+                Storyboard showMenuAnimation = (Storyboard)FindResource("ShowMenuAnimation");
+                showMenuAnimation.Begin();
+
                 CargarAsientosPorPelicula(peliculaSeleccionada.Id); // Llama al método para cargar asientos
                 peli = peliculaSeleccionada.Id;
+            }
+            else
+            {
+                // Si no hay una película seleccionada, ocultar el menú
+                Storyboard hideMenuAnimation = (Storyboard)FindResource("HideMenuAnimation");
+                hideMenuAnimation.Begin();
             }
         }
         public ObservableCollection<Asiento> Asientos { get; set; } = new ObservableCollection<Asiento>();
@@ -467,15 +479,6 @@ namespace SideBar_Nav.Pages
             catch (Exception ex)
             {
                 MessageBox.Show("Error al guardar la reserva en la base de datos: " + ex.Message);
-            }
-        }
-
-        private void prueba(object sender, RoutedEventArgs e)
-        {
-            foreach (var asiento in Asientos)
-            {
-                Console.WriteLine($"--------------------------------------------------------------------");
-                Console.WriteLine($"Asiento {asiento.Id}: {(asiento.IsOcupado ? "Ocupado" : "Libre")}");
             }
         }
     }

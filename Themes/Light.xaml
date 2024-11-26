@@ -10,4 +10,7 @@
     <SolidColorBrush Color="Black" x:Key="Backdrop_Chairs"/>
     <SolidColorBrush Color="Blue" x:Key="HyperLink_Text"/>
     <SolidColorBrush Color="Black" x:Key="Text_List"/>
+    <SolidColorBrush Color="#add8e6" x:Key="SelectionBackground"/>
+    <SolidColorBrush Color="#add8e6" x:Key="SelectionBackgroundTitle"/>
+    <SolidColorBrush Color="#ecefef" x:Key="BackgroundTitle"/>
 </ResourceDictionary>
