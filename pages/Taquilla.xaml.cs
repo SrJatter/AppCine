@@ -314,6 +314,7 @@ namespace SideBar_Nav.Pages
                 showMenuAnimation.Begin();
 
                 CargarAsientosPorPelicula(peliculaSeleccionada.Id); // Llama al método para cargar asientos
+                VaciarSeleccion();
                 peli = peliculaSeleccionada.Id;
             }
             else
@@ -453,9 +454,6 @@ namespace SideBar_Nav.Pages
             }
         }
 
-
-
-
         private void GuardarReservaEnBaseDeDatos(int asientoId)
         {
             string connectionString = "Server=localhost;Port=3306;Uid=root;Pwd=root;Database=appcine;";
@@ -480,6 +478,24 @@ namespace SideBar_Nav.Pages
             catch (Exception ex)
             {
                 MessageBox.Show("Error al guardar la reserva en la base de datos: " + ex.Message);
+            }
+        }
+    private void VaciarSeleccion()
+        {
+            if (DataContext is TaquillaViewModel viewModel)
+            {
+                // Filtrar los asientos seleccionados
+                var asientosSeleccionados = viewModel.Asientos.Where(a => a.IsSelected).ToList();
+
+                if (asientosSeleccionados.Count == 0)
+                {
+                    return;
+                }
+
+                foreach (var asiento in asientosSeleccionados)
+                {
+                    asiento.IsSelected = false;
+                }
             }
         }
     }
