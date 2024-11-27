@@ -17,9 +17,6 @@ using System.Windows.Shapes;
 
 namespace SideBar_Nav.Pages
 {
-    /// <summary>
-    /// Interaction logic for Page4.xaml
-    /// </summary>
     public partial class About : Page
     {
         private string urli = "";
@@ -35,9 +32,9 @@ namespace SideBar_Nav.Pages
             if (image != null)
             {
                 PhotoName.Text = image.Tag.ToString();
-                if (PhotoName.Text == "Hector Apolo Andrade") { urli = "heaploan"; desc = "Creador e Implementador de Login"; }
-                else if (PhotoName.Text == "David Moldovan") { urli = "SrJatter"; desc = "Programador del backend y pagina de Resevas"; }
-                else if (PhotoName.Text == "Javier Merlo") { urli = "PirataArcade"; desc = "Creador de Cerrar sesion y Info"; }
+                if (PhotoName.Text == "Hector Apolo Andrade") { urli = "heaploan"; desc = "Creador e Implementador de Login y Registrarse"; }
+                else if (PhotoName.Text == "David Moldovan") { urli = "SrJatter"; desc = "Programador del backend, pagina de Reservas y co-sillas"; }
+                else if (PhotoName.Text == "Javier Merlo") { urli = "PirataArcade"; desc = "Creador de Cerrar sesion, Info, co-sillas y extras del menu"; }
 
                 PhotoHyperlink.NavigateUri = new System.Uri("https://github.com/" + urli);
                 PhotoDesc.Text = desc;

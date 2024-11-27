@@ -64,7 +64,7 @@
             </Border.RenderTransform>
             <StackPanel Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock x:Name="PhotoName" FontWeight="Bold" FontSize="16" Margin="0 0 0 10" Foreground="{DynamicResource Text}" HorizontalAlignment="Center"/>
-                <TextBlock x:Name="PhotoDesc" FontSize="16" Margin="0 0 0 10" Foreground="{DynamicResource Text}"/>
+                <TextBlock x:Name="PhotoDesc" FontSize="16" Margin="0 0 0 10" Foreground="{DynamicResource Text}" TextWrapping="WrapWithOverflow"/>
                 <TextBlock HorizontalAlignment="Center">
                     <Hyperlink Foreground="{DynamicResource HyperLink_Text}" x:Name="PhotoHyperlink" NavigateUri="https://github.com" RequestNavigate="PhotoHyperlink_RequestNavigate">
                         Perfil GitHub
