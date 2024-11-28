@@ -200,11 +200,11 @@ namespace SideBar_Nav.Pages
             {
                 // Si se selecciona una película, mostrar el menú
                 Storyboard showMenuAnimation = (Storyboard)FindResource("ShowMenuAnimation");
+                CargarAsientosPorPelicula(peliculaSeleccionada.Id);
                 SlideMenu.Visibility = Visibility.Visible;
                 showMenuAnimation.Begin();
 
-
-                CargarAsientosPorPelicula(peliculaSeleccionada.Id); // Llama al método para cargar asientos
+                // Llama al método para cargar asientos
                 VaciarSeleccion();
                 peli = peliculaSeleccionada.Id;
             }
@@ -213,7 +213,7 @@ namespace SideBar_Nav.Pages
                 // Si no hay una película seleccionada, ocultar el menú
                 Storyboard hideMenuAnimation = (Storyboard)FindResource("HideMenuAnimation");
                 hideMenuAnimation.Begin();
-                SlideMenu.Visibility = Visibility.Collapsed;
+                SlideMenu.Visibility = Visibility.Hidden;
 
             }
         }
