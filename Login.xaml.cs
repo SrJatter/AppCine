@@ -50,13 +50,7 @@ namespace AppCine
             if (AuthMode)
             {
                 // Validar email no vacío y en formato correcto
-                if (email == "a" && password == "a") // !!!!bypass borrar cuando se tenga que entregar!!!!!
-                {
-                    IsAdmin = true;
-                    this.Visibility = Visibility.Hidden; // Oculta la ventana de login
-                    failedAttempts = 0; // Reinicia los intentos fallidos al loguearse correctamente
-                }
-                else if (string.IsNullOrWhiteSpace(email) || !IsValidEmail(email))
+               if (string.IsNullOrWhiteSpace(email) || !IsValidEmail(email))
                 {
                     MessageBox.Show("Por favor, ingrese un correo electrónico válido.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     failedAttempts++;
@@ -114,6 +108,7 @@ namespace AppCine
                     bool registroExitoso = await RegistrarUsuario(email, password);
                     if (registroExitoso)
                     {
+                        IsAdmin = false;
                         MessageBox.Show("Registro exitoso.\nIniciando sesion...", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Visibility = Visibility.Hidden; // Oculta la ventana de login
                         failedAttempts = 0; // Reinicia los intentos fallidos al loguearse correctamente

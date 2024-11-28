@@ -28,7 +28,6 @@ namespace SideBar_Nav.Pages
             InitializeComponent();
             CargarPeliculas();  // Cargamos las películas al iniciar
             CargarFiltros();  // Cargamos los filtros en el ComboBox
-            CargarEstadosAsientos();
         }
 
         private void CargarPeliculas()
@@ -194,116 +193,6 @@ namespace SideBar_Nav.Pages
                 list_peliculas.ItemsSource = peliculasFiltradas;
             }
         }
-
-        private void CargarEstadosAsientos()
-        {
-            /*var rect = Rectangle;
-            var asiento = rect?.DataContext as Asiento; // Obtener el DataContext, que es el Asiento
-
-            if (asiento != null)
-            {
-                // Comprobar si el Id del asiento es 1
-                if (asiento.Id == 1)
-                {
-                    if (!asiento_1)
-                    {
-                        rect.Fill = Brushes.Green;
-                    }
-                    else
-                    {
-                        rect.Fill = Brushes.Red;
-                    }
-                }
-                else if (asiento.Id == 2)
-                {
-                    if (!asiento_2)
-                    {
-                        rect.Fill = Brushes.Green;
-                    }
-                    else
-                    {
-                       rect.Fill = Brushes.Red;
-                    }
-                }
-                else if (asiento.Id == 3)
-                {
-                    if (!asiento_3)
-                    {
-                        rect.Fill = Brushes.Green;
-                    }
-                    else
-                    {
-                       rect.Fill = Brushes.Red;
-                    }
-                }
-                else if (asiento.Id == 4)
-                {
-                    if (!asiento_4)
-                    {
-                        rect.Fill = Brushes.Green;
-                    }
-                    else
-                    {
-                       rect.Fill = Brushes.Red;
-                    }
-                }
-                else if (asiento.Id == 5)
-                {
-                    if (!asiento_5)
-                    {
-                        rect.Fill = Brushes.Green;
-                    }
-                    else
-                    {
-                       rect.Fill = Brushes.Red;
-                    }
-                }
-                else if (asiento.Id == 6)
-                {
-                    if (!asiento_6)
-                    {
-                        rect.Fill = Brushes.Green;
-                    }
-                    else
-                    {
-                       rect.Fill = Brushes.Red;
-                    }
-                }
-                else if (asiento.Id == 7)
-                {
-                    if (!asiento_7)
-                    {
-                        rect.Fill = Brushes.Green;
-                    }
-                    else
-                    {
-                       rect.Fill = Brushes.Red;
-                    }
-                }
-                else if (asiento.Id == 8)
-                {
-                    if (!asiento_8)
-                    {
-                        rect.Fill = Brushes.Green;
-                    }
-                    else
-                    {
-                       rect.Fill = Brushes.Red;
-                    }
-                }
-                else if (asiento.Id == 9)
-                {
-                    if (!asiento_9)
-                    {
-                        rect.Fill = Brushes.Green;
-                    }
-                    else
-                    {
-                       rect.Fill = Brushes.Red;
-                    }
-                }
-            }*/
-        }
         private void list_peliculas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Verifica si hay un elemento seleccionado
@@ -311,7 +200,9 @@ namespace SideBar_Nav.Pages
             {
                 // Si se selecciona una película, mostrar el menú
                 Storyboard showMenuAnimation = (Storyboard)FindResource("ShowMenuAnimation");
+                SlideMenu.Visibility = Visibility.Visible;
                 showMenuAnimation.Begin();
+
 
                 CargarAsientosPorPelicula(peliculaSeleccionada.Id); // Llama al método para cargar asientos
                 VaciarSeleccion();
@@ -322,6 +213,8 @@ namespace SideBar_Nav.Pages
                 // Si no hay una película seleccionada, ocultar el menú
                 Storyboard hideMenuAnimation = (Storyboard)FindResource("HideMenuAnimation");
                 hideMenuAnimation.Begin();
+                SlideMenu.Visibility = Visibility.Collapsed;
+
             }
         }
         public ObservableCollection<Asiento> Asientos { get; set; } = new ObservableCollection<Asiento>();

@@ -55,6 +55,7 @@ namespace AppCine
                 if (selected.Name == "Exit")
                 {
                     exitButtonClicked = true; // Indicar que se hizo clic en el botón "Exit"
+                    Moon_Sun_Logout();
                     this.DialogResult = false;
                     this.Close();
                 }
@@ -121,6 +122,14 @@ namespace AppCine
         {
             Trace.WriteLine("Pulsacion");
             ThemeChange = !ThemeChange; // Alterna entre true y false
+            var themeUri = ThemeChange
+                ? new Uri("Themes/Light.xaml", UriKind.Relative)
+                : new Uri("Themes/Dark.xaml", UriKind.Relative);
+            ChangeTheme(themeUri);
+        }
+        private void Moon_Sun_Logout()
+        {
+            ThemeChange = true; // Alterna entre true y false
             var themeUri = ThemeChange
                 ? new Uri("Themes/Light.xaml", UriKind.Relative)
                 : new Uri("Themes/Dark.xaml", UriKind.Relative);

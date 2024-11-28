@@ -16,24 +16,7 @@
         <!-- Botón para cargar el archivo -->
         <Button Content="Cargar Archivo" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Height="30" Margin="10,50,0,0" Click="LoadFileButton_Click"/>
 
-        <!-- Lista de Películas -->
-        <ListBox Name="MoviesListBox" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="0,90,0,0">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <!-- Mostrar los detalles de la película -->
-                        <TextBlock Text="{Binding Title}" FontWeight="Bold" FontSize="16" />
-                        <TextBlock Text="{Binding Sala}" />
-                        <TextBlock Text="{Binding Language}" />
-                        <TextBlock Text="{Binding StartDate}" />
-                        <TextBlock Text="{Binding EndDate}" />
-                        <TextBlock Text="{Binding StartTime}" />
-                        <TextBlock Text="{Binding Duration}" />
-                        <TextBlock Text="{Binding GenresString}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        
 
     </Grid>
 </Window>

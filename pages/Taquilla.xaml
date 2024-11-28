@@ -19,19 +19,19 @@
         <conv:BooleanToBrushConverter x:Key="BooleanToBrushConverter" />
         <Storyboard x:Key="ShowMenuAnimation">
             <DoubleAnimation Storyboard.TargetName="SlideMenuTransform"
-                         Storyboard.TargetProperty="X"
-                         From="300" To="0" Duration="0:0:0.3" />
+                     Storyboard.TargetProperty="X"
+                     From="300" To="0" Duration="0:0:0.3" />
         </Storyboard>
 
         <Storyboard x:Key="HideMenuAnimation">
             <DoubleAnimation Storyboard.TargetName="SlideMenuTransform"
-                         Storyboard.TargetProperty="X"
-                         From="0" To="300" Duration="0:0:0.3" />
+                     Storyboard.TargetProperty="X"
+                     From="0" To="300" Duration="0:0:0.3" />
         </Storyboard>
     </Page.Resources>
 
     <Grid x:Name="Peliculas" Background="{DynamicResource Backdrop_Page}">
-        <ListView Background="{DynamicResource Backdrop_Mineu}"  Foreground="{DynamicResource Text_List}"  x:Name="list_peliculas" HorizontalAlignment="Left" Height="300" VerticalAlignment="Center" Width="570" Margin="23,0,0,0" SelectionChanged="list_peliculas_SelectionChanged">
+        <ListView Background="{DynamicResource Backdrop_Mineu}"  Foreground="{DynamicResource Text_List}"  x:Name="list_peliculas" HorizontalAlignment="Left" Height="300" VerticalAlignment="Center" Width="570" Margin="23,0,0,0" SelectionMode="Single" SelectionChanged="list_peliculas_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Titulo" Width="Auto" DisplayMemberBinding="{Binding titulo}" />
@@ -87,7 +87,7 @@
         <ComboBox x:Name="filterBox" HorizontalAlignment="Left" Margin="120,24,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.364,-2.383" SelectionChanged="ComboBox_SelectionChanged"/>
         <Label Foreground="{DynamicResource Text}" Content="Filtrar Por:" HorizontalAlignment="Left" Margin="23,22,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="subFilterBox" HorizontalAlignment="Left" Margin="300,24,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="subFilterBox_SelectionChanged"/>
-        <Grid x:Name="SlideMenu">
+        <Grid x:Name="SlideMenu" Visibility="Collapsed">
             <Grid.RenderTransform>
                 <TranslateTransform x:Name="SlideMenuTransform" X="300" />
             </Grid.RenderTransform>
