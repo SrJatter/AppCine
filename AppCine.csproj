@@ -249,9 +249,6 @@
     <Resource Include="favicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pages\persona.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="pages\images\David.png" />
     <Resource Include="pages\images\Hector.png" />
     <Resource Include="pages\images\Javier.png" />
