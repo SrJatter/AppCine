@@ -45,7 +45,7 @@ CREATE TABLE `asientos` (
 
 LOCK TABLES `asientos` WRITE;
 /*!40000 ALTER TABLE `asientos` DISABLE KEYS */;
-INSERT INTO `asientos` VALUES (71,0,0,0,0,0,0,0,0,0),(72,1,1,0,0,0,1,0,0,1),(73,0,0,0,0,1,0,0,0,0),(74,0,0,0,0,0,0,0,0,0),(75,0,0,0,0,0,0,0,0,0),(76,0,0,0,0,0,0,0,0,0),(77,0,0,0,0,0,0,0,0,0),(78,0,0,0,0,0,0,0,0,0);
+INSERT INTO `asientos` VALUES (1,0,0,0,0,0,0,0,0,0),(2,0,0,0,0,0,0,0,0,0),(3,0,0,0,0,0,0,0,0,0),(4,0,0,0,0,0,0,0,0,0),(5,0,0,0,0,0,0,0,0,0);
 /*!40000 ALTER TABLE `asientos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,7 +69,7 @@ CREATE TABLE `pelicula` (
   PRIMARY KEY (`id`),
   KEY `numero_sala` (`numero_sala`),
   CONSTRAINT `pelicula_ibfk_1` FOREIGN KEY (`numero_sala`) REFERENCES `sala` (`numero`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +78,7 @@ CREATE TABLE `pelicula` (
 
 LOCK TABLES `pelicula` WRITE;
 /*!40000 ALTER TABLE `pelicula` DISABLE KEYS */;
-INSERT INTO `pelicula` VALUES (71,'Oppenheimer',1,'Ingles','2024-10-15','2024-12-15','19:00:00',180,'Drama,Documental,Fantasia'),(72,'Barbie',2,'Catalan','2024-10-10','2024-12-10','21:00:00',114,'Comedia,Fantasia'),(73,'Spider-Man: Across the Spider-Verse',3,'Castellano','2024-11-01','2024-12-01','18:30:00',111,'Musical,Aventura,Accio'),(74,'The Exorcist: Believer',1,'Ingles','2024-10-05','2024-12-05','22:00:00',111,'Terror,Suspense'),(75,'Killers of the Flower Moon',3,'Ingles','2024-10-20','2024-12-20','22:00:00',206,'Ciencia_Ficcio,Comedia');
+INSERT INTO `pelicula` VALUES (1,'Oppenheimer',1,'Ingles','2024-10-15','2024-12-15','19:00:00',180,'Drama,Documental'),(2,'Barbie',2,'Catalan','2024-10-10','2024-12-10','21:00:00',114,'Comedia,Fantasia,Musical'),(3,'Spider-Man: Across the Spider-Verse',3,'Castellano','2024-11-01','2026-01-01','18:30:00',111,'Aventura,Accio,Ciencia_Ficcio'),(4,'The Exorcist: Believer',1,'Ingles','2024-10-05','2024-12-05','22:00:00',111,'Terror,Suspense'),(5,'Killers of the Flower Moon',3,'Ingles','2024-10-20','2024-12-20','22:00:00',206,'Ciencia_Ficcio,Drama');
 /*!40000 ALTER TABLE `pelicula` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,4 +140,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-28 18:45:46
+-- Dump completed on 2024-12-02 20:05:26
